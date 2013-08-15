@@ -44,7 +44,7 @@ C Style Guide
       2. Parenthesis and brackets
       3. Pointers
       4. Casts
-      5. for loops
+      5. `for` loops
   7.  Braces
   8.  Alignment
       1. Assignments
@@ -65,7 +65,7 @@ C Style Guide
   20. Dereferencing
   21. Conditionals
   22. Switch statements
-  23. Long if/else if statements
+  23. Long `if/else if` statements
   24. Inline documentation
   25. Compilation
 
@@ -575,7 +575,7 @@ Simple typedefs are declared on a single line:
 typedef int foo;
 ```
 
-With structs and unions, place the type name on a new line:
+With structs, unions and enums place the type name on a new line:
 
 ```C
 typedef struct
