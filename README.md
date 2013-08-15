@@ -628,7 +628,9 @@ For instance, for `include/foo/bar/foobar.h`, this should be `__FOO_BAR_FOOBAR_H
 
 ### 17. Functions prototypes
 
-Function prototypes should always declare the parameters names:
+Function prototypes should always declare the parameters names.  
+A single whitespace character should be used after the coma separating parameters.  
+The return type should be place on the same line as the function's name:
 
 ```C
 void foo( int x, int y );
@@ -637,7 +639,8 @@ void foo( int x, int y );
 Not:
 
 ```C
-void foo( int, int );
+void
+foo( int,int );
 ```
 
 ### 18. Functions with no parameters
@@ -840,10 +843,119 @@ void foo( int unused )
 C++ Style Guide
 ---------------
 
+**All rules from the C Style Guide applies here, with a few exceptions and additions described hereafter.**
+
+  1. Comments
+  2. Namespaces
+  3. Classes
+     1. Naming
+     2. Inheritance
+     3. Members
+     4. Method definitions
+  4. Templates
+
+### 1. Comments
+
+Single line C++ comments are allowed, even if the `/*  */` notation is usually preferred.
+
+### 2. Namespaces
+
+Namespaces should always use the upper camel-case rule.
+
+### 3. Classes
+
+#### 3.1. Naming
+
+C++ classes should always use the upper camel-case rule.  
+Methods should always use the lower camel-case rule, as well as properties.
+
+Private members should always have a leading underscore.
+
+#### 3.2. Inheritance
+
+The `:` sign should immediately follow the class name and should be followed by a single whitespace character.  
+When inheriting from multiple classes, a single whitespace character should be used after the comma:
+
+```C++
+class FooBar: Foo, Bar
+{
+	
+};
+```
+
+#### 2.3. Members
+
+Public members should be declared first, followed by protected and private members.  
+Always group members with the same visibility (properties and methods).  
+
+Static members should also be declared first, inside the visibility group, followed by methods and properties.  
+Separate static methods, methods and properties by an empty line.
+
+The `public`, `protected` and `private` keywords should be indented by four spaces and an empty line should be placed directly after.  
+Members should be indented by four more spaces:
+
+```C++
+class Foo
+{
+    public:
+        
+        static void staticMethod( void );
+        
+        Foo( void );
+        
+        int           x;
+        unsigned long y;
+        
+    private:
+        
+        void _bar( void );
+        
+        int _z;
+};
+```
+
+#### 3.4. Method definitions
+
+Except for templates, method definitions should never be on the header files.
+
+### 4. Templates
+
+Template parameters should be surrounded by a single whitespace character.  
+A single whitespace character should be used after the comma.  
+The `<` sign should immediately follow the class name:
+
+```C++
+template class Foo< int x, int y >
+{
+    
+};
+```
+
+### 5. Using
+
+The `using` keyword is usually discouraged, except for very long namespaces.  
+It's strictly prohibited for the `std` namespace - the full notation should always be used.
+
+```C++
+std::vector< int > v;
+```
+
+Not:
+
+```C++
+using std;
+
+vector< int > v;
+```
+
+### 6. [ xxx ]
+
 ... [ in progress ] ...
 
 Objective-C Style Guide
 -----------------------
+
+**All rules from the C Style Guide applies here, with a few exceptions and additions described hereafter.**
 
 ... [ in progress ] ...
 
