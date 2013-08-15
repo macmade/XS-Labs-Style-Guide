@@ -4,15 +4,15 @@ XS-Labs Coding Style Guide for C, C++, Objective-C and x86 Assembly
 Table Of Contents
 -----------------
 
- 1. About
- 1. License
- 1. C Style Guide
- 1. C++ Style Guide
- 1. Objective-C Style Guide
- 1. x86 Assembly Style Guide
+ 1. [About](#about)
+ 1. [License](#license)
+ 1. [C Style Guide](#c)
+ 1. [C++ Style Guide](#cpp)
+ 1. [Objective-C Style Guide](#objc)
+ 1. [x86 Assembly Style Guide](#asm)
 
-About
------
+About [about]
+-------------
 
 These are the coding conventions used for all recent [XS-Labs](http://www.xs-labs.com/) projects.  
 Feel free to comment, raise issues, fork and/or adapt this document.
