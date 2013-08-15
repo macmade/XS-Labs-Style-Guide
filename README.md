@@ -80,7 +80,7 @@ The basic differences are the following:
 The direction of the operands in the Intel syntax is the opposite of AT&T syntax.  
 In the Intel syntax, the destination operand comes first, followed by the source operand:
 
-```Assembly
+```NASM
     instr dest, src  ; Intel
 ```
 ```GAS
@@ -91,7 +91,7 @@ In the Intel syntax, the destination operand comes first, followed by the source
 
 The Intel syntax doesn't use prefixes for register names or immediate operands, while the AT&T syntax uses the `%` prefix for registers and `$` for immediate operands:
 
-```Assembly
+```NASM
     mov  rax, 1    ; Intel
 ```
 ```GAS
@@ -104,7 +104,7 @@ The Intel syntax doesn't use suffixes for mnemonics, while the AT&T syntax uses 
 The size of the operands is automatically assumed when using registers.  
 For memory operands, similar directives can be used (`BYTE`, `WORD`, `DWORD`, `QWORD`):
 
-```Assembly
+```NASM
     ; Intel
 	mov  rax, 1
 	mov  eax, 1
@@ -118,7 +118,7 @@ For memory operands, similar directives can be used (`BYTE`, `WORD`, `DWORD`, `Q
 #### 1.4 Memory operands
 
 The Intel syntax uses `[]` for memory operands, while the AT&T syntax uses `()`:
-```Assembly
+```NASM
     mov  rax, [ rdi + 8 ] ; Intel
 ```
 ```GAS
@@ -127,7 +127,7 @@ The Intel syntax uses `[]` for memory operands, while the AT&T syntax uses `()`:
 
 The index, scale, displacement and segment also use a different notation:
 
-```Assembly
+```NASM
 mov  rax, segment:[ base + index * scale + displacement ] ; Intel
 ```
 ```GAS
@@ -139,7 +139,7 @@ movq %segment:displacement( base, index, scale ), %rax    // AT&T
 Local labels inside a procedure should always start with a dot.  
 For instance:
 
-```Assembly
+```NASM
 procedure:
     
     .label1:
@@ -164,7 +164,7 @@ Code should always be indented using four spaces.  Never use tabulations for ind
 
 Mnemonics and operands should be aligned, in order to improve the code's readability, and a decent amount of spaces should be placed between the mnemonics and the operands:
 
-```Assembly
+```NASM
 xor      rax,       rax
 mov      al,        1
 pxor     xmm0,      xmm0
@@ -174,7 +174,7 @@ movdqa   [ rdi ],   xmm1
 
 Not this:
 
-```Assembly
+```NASM
 xor rax, rax
 mov al, 1
 pxor xmm0, xmm0
@@ -190,19 +190,19 @@ When using memory operands, inserts a white space between the brackets:
     
 Not:
 
-```Assembly
+```NASM
 mov rax, [rdi]
 ```
 
 Also inserts a a whitespace around arithmetic operators:
 
-```Assembly
+```NASM
 mov rax, [ rdi + 8 ]
 ```
 
 Not:
 
-```Assembly
+```NASM
 mov rax, [rdi+8]
 ```
 
@@ -210,7 +210,7 @@ mov rax, [rdi+8]
 
 Comments should be placed on a new line and should not exceed 80 columns in width:
 
-```Assembly
+```NASM
 ; This is a comment
 ; with another line...
 xor rax, rax
@@ -218,7 +218,7 @@ xor rax, rax
 
 Not:
 
-```Assembly
+```NASM
 xor rax, rax ; This is a comment
 ```
 
@@ -229,7 +229,7 @@ Don't simply describe what you are doing, but also why you are doing it.
 
 Instructions should be grouped in a logical manner, with a newline between groups:
 
-```Assembly
+```NASM
 ; Comment for instruction group 1
 xor     rax,     rax
 xor     rcx,     rcx
@@ -246,7 +246,7 @@ movdqa   xmm1,   [ rdi ]
 
 All procedures should start with a standard comment, describing the procedure, the input and return registers, as well as killed registers, if any:
 
-```Assembly
+```NASM
 ;-------------------------------------------------------------------------------
 ; Short description of the procedure (single line)
 ; 
@@ -271,7 +271,7 @@ All procedures should start with a standard comment, describing the procedure, t
 
 When no register is used as input or as return, or when no register is killed:
 
-```Assembly
+```NASM
 ;-------------------------------------------------------------------------------
 ; Short description of the procedure (single line)
 ; 
@@ -300,13 +300,13 @@ The following is not mandatory, but it's strongly advised to follow these recomm
 
 Always use `xor` to zero a register, instead of `mov`:
 
-```Assembly
+```NASM
 xor rax, rax
 ```
     
 Not:
 
-```Assembly
+```NASM
 mov rax, 0
 ```
 
@@ -314,14 +314,14 @@ mov rax, 0
 
 Always use `test` when comparing with zero, instead of `cmp`:
 
-```Assembly
+```NASM
 test rax, rax
 jz   .label
 ```
  
 Not:
 
-```Assembly
+```NASM
 cmp  rax, 0
 je   .label
 ```
@@ -330,14 +330,14 @@ je   .label
 
 Always use `add` and `sub` when incrementing or decrementing a register, instead of `inc` or `dec`:
 
-```Assembly
+```NASM
 add rax, 1
 sub rbx, 1
 ```  
 
 Not:
 
-```Assembly
+```NASM
 inc rax
 dec rbx
 ```
@@ -349,7 +349,7 @@ When using conditional jumps, the following rules should be observed in order to
 
 ##### Predict forward conditional branches to be not taken
 
-```Assembly
+```NASM
 test rax, rax
 jz   .label
 
@@ -362,7 +362,7 @@ jz   .label
 
 ##### Predict backward conditional branches to be taken
 
-```Assembly
+```NASM
 .label:
     
     ; Backward branch - Most likely
@@ -379,7 +379,7 @@ And of course, eliminate branches whenever possible.
 
 Whenever possible, unroll loops:
 
-```Assembly
+```NASM
 .loop:
     
     mov [ rdi      ], [ rsi      ]
@@ -397,7 +397,7 @@ Whenever possible, unroll loops:
 
 Instead of:
 
-```Assembly
+```NASM
 .loop:
     
     mov [ rdi ],      [ rsi ]
