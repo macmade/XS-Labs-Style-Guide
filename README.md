@@ -37,41 +37,42 @@ This style guide is published under the terms of the [FreeBSD documentation lice
 C Style Guide
 -------------
 
-  1.  Indentation
-  2.  Ending line
-  3.  Comments
-  4.  Maximum number of columns
-  5.  Includes
-  6.  Whitespace
-      1. Operators
-      2. Parenthesis and brackets
-      3. Pointers
-      4. Casts
-      5. `for` loops
-  7.  Braces
-  8.  Alignment
-      1. Assignments
-      2. Variable declarations
-      3. Single line conditionals
-      4. Array subscripting operator
-  9.  Case and symbols naming
-  10. Variable declaration
-  11. Macros
-  12. Structs and unions
-  13. Enums
-  14. Typedefs
-  15. New lines
-  16. Header guards
-  17. Functions prototypes
-  18. Functions with no parameters
-  19. Inline functions
-  20. Dereferencing
-  21. Conditionals
-  22. Switch statements
-  23. Long `if/else if` statements
-  24. Inline documentation
-  25. Compilation
+  1.  [Indentation](#c-1)
+  2.  [Ending line](#c-2)
+  3.  [Comments](#c-3)
+  4.  [Maximum number of columns](#c-4)
+  5.  [Includes](#c-5)
+  6.  [Whitespace](#c-6)
+      1. [Operators](#c-6-1)
+      2. [Parenthesis and brackets](#c-6-2)
+      3. [Pointers](#c-6-2)
+      4. [Casts](#c-6-4)
+      5. [`for` loops](#c-6-5)
+  7.  [Braces](#c-7)
+  8.  [Alignment](#c-8)
+      1. [Assignments](#c-8-1)
+      2. [Variable declarations](#c-8-2)
+      3. [Single line conditionals](#c-8-3)
+      4. [Array subscripting operator](#c-8-4)
+  9.  [Case and symbols naming](#c-9)
+  10. [Variable declaration](#c-10)
+  11. [Macros](#c-111)
+  12. [Structs and unions](#c-12)
+  13. [Enums](#c-13)
+  14. [Typedefs](#c-14)
+  15. [New lines](#c-14)
+  16. [Header guards](#c-16)
+  17. [Functions prototypes](#c-17)
+  18. [Functions with no parameters](#c-18)
+  19. [Inline functions](#c-19)
+  20. [Dereferencing](#c-20)
+  21. [Conditionals](#c-21)
+  22. [Switch statements](#c-22)
+  23. [Long `if/else if` statements](#c-23)
+  24. [Inline documentation](#c-24)
+  25. [Compilation](#c-25)
 
+<a name="c-1"></a>
 ### 1. Indentation
 
 Code should always be indented using four spaces.  Never use tabulations for indentation.
@@ -98,10 +99,12 @@ void foo( void )
 }
 ```
 
+<a name="c-2"></a>
 ### 2. Ending line
 
 Source and header files should always end with a single empty line.
 
+<a name="c-3"></a>
 ### 3. Comments
 
 Comments should always use the `/* */` notations.  
@@ -124,11 +127,13 @@ If the comments consists of multiple lines, place the `/* */` on a new line:
 
 When using multiple line comments, always align the `*` signs, as in the above example.
 
+<a name="c-4"></a>
 ### 4. Maximum number of columns
 
 The number of columns for a single line is not limited.  
 However, try whenever possible to wrap long lines in order to improve the overall readability.
 
+<a name="c-5"></a>
 ### 5. Includes
 
 Include directives should always come first, before any other declaration:
@@ -155,8 +160,10 @@ An exception is made when a header needs a specific macro to be set before inclu
 #include <foobar.h>
 ```
 
+<a name="c-6"></a>
 ### 6. Whitespace
 
+<a name="c-6-1"></a>
 #### 6.1 Operators
 
 A single whitespace character should always be used around all operators except unary operators:
@@ -187,6 +194,7 @@ if( ! x )
 }
 ```
 
+<a name="c-6-2"></a>
 #### 6.2 Parenthesis and brackets
 
 A single whitespace character should always be used inside parenthesis and brackets, but never before:
@@ -215,6 +223,7 @@ if (y == 0)
 }
 ```
 
+<a name="c-6-3"></a>
 #### 6.3 Pointers
 
 The pointer sign should alway have a leading and trailing space:
@@ -230,6 +239,7 @@ int* x;
 int *x;
 ```
 
+<a name="c-6-4"></a>
 #### 6.4 Casts
 
 No whitespace should be added after a cast. A single whitespace should be used after the opening parenthesis and before the closing one:
@@ -244,6 +254,7 @@ Not:
 x = ( char * ) y;
 ```
 
+<a name="c-6-5"></a>
 #### 6.5 `for` loops
 
 When using `for` loops, a single whitespace character should be used after the semicolons:
@@ -264,6 +275,7 @@ for( i = 0;i < 10;i++ )
 }
 ```
 
+<a name="c-7"></a>
 ### 7. Braces
 
 Braces should always be placed on an empty line.  
@@ -311,8 +323,10 @@ An exceptions can be made for very simple constructs:
 else if( ... ) { x = 2; }
 ```
 
+<a name="c-8"></a>
 ### 8. Alignment
 
+<a name="c-8-1"></a>
 #### 8.1 Assignments
 
 Always align consecutive assignments:
@@ -357,6 +371,7 @@ foobar = ( x ) ? 2 : x + 3;
 foo    = ( foobar ) ? foobar : x;
 ```
 
+<a name="c-8-2"></a>
 #### 8.2. Variable declarations
 
 Always aligns the names of variables:
@@ -382,6 +397,7 @@ int           * x;
 unsigned long * y;
 ```
 
+<a name="c-8-3"></a>
 #### 8.3. Single line conditionals
 
 If using single line conditional statements (see above), align the `if`/`else` statements, as well as the opening/closing braces and comparison operators:
@@ -400,6 +416,7 @@ else if( foobar == 1 ) { x = 0xFFFFFFFF; }
 else { x = 0; }
 ```
 
+<a name="c-8-4"></a>
 #### 8.4. Array subscripting operator
 
 Always align the closing brackets when using the array subscripting operator. Indexes should be indented in a logical manner:
@@ -416,6 +433,7 @@ x[ 1 ]   = 0;
 x[ 100 ] = 0;
 ```
 
+<a name="c-9"></a>
 ### 9. Case and symbols naming
 
 Local variables should never start with an underscore, and should always start with a lowercase letter.  
@@ -446,6 +464,7 @@ static int x;
 
 This also applies to static functions.
 
+<a name="c-10"></a>
 ### 10. Variable declaration
 
 Local variables should be declared without a value, and before any other statement:
@@ -499,6 +518,7 @@ for( int i = 0; i < 10; i++ )
 }
 ```
 
+<a name="c-11"></a>
 ### 11. Macros
 
 Macros should always be in uppercase.
@@ -515,6 +535,7 @@ If a macro takes parameters, the parameters names should begin and end with a si
 
 As in the above example, parenthesis should always be used around a macro parameter.
 
+<a name="c-12"></a>
 ### 12. Structs and unions
 
 Members of structs and unions should be properly aligned, as mentioned before:
@@ -545,6 +566,7 @@ struct foo
 };
 ```
 
+<a name="c-13"></a>
 ### 13. Enums
 
 Enum values should be properly aligned, as mentioned before.  
@@ -570,6 +592,7 @@ enum
 };
 ```
 
+<a name="c-14"></a>
 ### 14. Typedefs
 
 Simple typedefs are declared on a single line:
@@ -589,6 +612,7 @@ typedef struct
 foo;
 ```
 
+<a name="c-15"></a>
 ### 15. New lines
 
 An empty line should be used to separate logical parts of the code, as well as to separate function calls and assignments:
@@ -611,6 +635,7 @@ foo();
 y = 2;
 ```
 
+<a name="c-16"></a>
 ### 16. Header guards
 
 All headers should be properly guarded:
@@ -629,6 +654,7 @@ It should consist of the name of the header file (optionally with directories pr
 
 For instance, for `include/foo/bar/foobar.h`, this should be `__FOO_BAR_FOOBAR_H__`.
 
+<a name="c-17"></a>
 ### 17. Functions prototypes
 
 Function prototypes should always declare the parameters names.  
@@ -646,6 +672,7 @@ void
 foo( int,int );
 ```
 
+<a name="c-18"></a>
 ### 18. Functions with no parameters
 
 Functions without parameters should always be declared as taking `void`:
@@ -660,10 +687,12 @@ Not:
 void foo();
 ```
 
+<a name="c-19"></a>
 ### 19. Inline functions
 
 Inline functions should generally avoided, unless there's a very good and specific reason to make them inline.
 
+<a name="c-20"></a>
 ### 20. Dereferencing
 
 When using the dereference operator `*`, always use an extra set of parenthesis:
@@ -680,6 +709,7 @@ Not:
 y  = *x;
 ```
 
+<a name="c-21"></a>
 ### 21. Conditionals
 
 Always use braces with conditionals:
@@ -758,6 +788,7 @@ if( !b || !p )
 }
 ```
 
+<a name="c-22"></a>
 ### 22. Switch statements
 
 When using switch statements, separate each `case` with an empty line and adds an empty line after the `case`.  
@@ -790,6 +821,7 @@ switch( x )
 
 In such a case, `break` statements should be aligned, as well as assignment operators, if any.
 
+<a name="c-23"></a>
 ### 23. Long `if`/`else if` statements
 
 Very long `if`/`else if` statements should be wrapped the following way:
@@ -826,10 +858,12 @@ if
 }
 ```
 
+<a name="c-24"></a>
 ### 24. Inline documentation
 
 Documented code should prefer [Apple's HeaderDoc](https://developer.apple.com/library/mac/documentation/DeveloperTools/Conceptual/HeaderDoc/intro/intro.html) syntax rather than JavaDoc.
 
+<a name="c-25"></a>
 ### 25. Compilation
 
 Always compiles your code with `-Werror` or similar, and always use the highest possible error reporting level.
@@ -843,30 +877,35 @@ void foo( int unused )
 }
 ```
 
+<a name="cpp"></a>
 C++ Style Guide
 ---------------
 
 **All rules from the C Style Guide applies here, with a few exceptions and additions described hereafter.**
 
-  1. Comments
-  2. Namespaces
-  3. Classes
-     1. Naming
-     2. Inheritance
-     3. Members
-     4. Method definitions
-  4. Templates
+  1. [Comments](#cpp-1)
+  2. [Namespaces](#cpp-2)
+  3. [Classes](#cpp-3)
+     1. [Naming](#cpp-3-1)
+     2. [Inheritance](#cpp-3-2)
+     3. [Members](#cpp-3-3)
+     4. [Method definitions](#cpp-3-4)
+  4. [Templates](#cpp-4)
 
+<a name="cpp-1"></a>
 ### 1. Comments
 
 Single line C++ comments are allowed, even if the `/*  */` notation is usually preferred.
 
+<a name="cpp-2"></a>
 ### 2. Namespaces
 
 Namespaces should always use the upper camel-case rule.
 
+<a name="cpp-3"></a>
 ### 3. Classes
 
+<a name="cpp-3-1"></a>
 #### 3.1. Naming
 
 C++ classes should always use the upper camel-case rule.  
@@ -874,6 +913,7 @@ Methods should always use the lower camel-case rule, as well as properties.
 
 Private members should always have a leading underscore.
 
+<a name="cpp-3-2"></a>
 #### 3.2. Inheritance
 
 The `:` sign should immediately follow the class name and should be followed by a single whitespace character.  
@@ -886,7 +926,8 @@ class FooBar: Foo, Bar
 };
 ```
 
-#### 2.3. Members
+<a name="cpp-3-3"></a>
+#### 3.3. Members
 
 Public members should be declared first, followed by protected and private members.  
 Always group members with the same visibility (properties and methods).  
@@ -917,10 +958,12 @@ class Foo
 };
 ```
 
+<a name="cpp-3-4"></a>
 #### 3.4. Method definitions
 
 Except for templates, method should never be defined in the header files.
 
+<a name="cpp-4"></a>
 ### 4. Templates
 
 Template parameters should be surrounded by a single whitespace character.  
@@ -934,6 +977,7 @@ template class Foo< int x, int y >
 };
 ```
 
+<a name="cpp-5"></a>
 ### 5. Using
 
 The `using` keyword is usually discouraged, except for very long namespaces.  
@@ -955,6 +999,7 @@ vector< int > v;
 
 ... [ in progress ] ...
 
+<a name="objc"></a>
 Objective-C Style Guide
 -----------------------
 
@@ -962,28 +1007,30 @@ Objective-C Style Guide
 
 ... [ in progress ] ...
 
+<a name="asm"></a>
 x86 Assembly Style Guide
 ------------------------
 
-  1. Syntax
-     1. Direction of Operands
-     2. Prefixes
-     2. Suffixes
-     2. Memory operands
-  2. Local labels
-  3. Indentation
-  4. Alignment
-  5. Whitespace
-  6. Comments
-  7. Grouping
-  8. Procedures comments
-  9. Optimisation
-     1. Zeroing
-     2. Comparing with zero
-     3. Incrementing and decrementing
-     4. Branching
-     5. Loops unrolling
+  1. [Syntax](#asm-1)
+     1. [Direction of Operands](#asm-1-1)
+     2. [Prefixes](#asm-1-2)
+     3. [Suffixes](#asm-1-3)
+     4. [Memory operands](#asm-1-4)
+  2. [Local labels](#asm-2)
+  3. [Indentation](#asm-3)
+  4. [Alignment](#asm-4)
+  5. [Whitespace](#asm-5)
+  6. [Comments](#asm-6)
+  7. [Grouping](#asm-7)
+  8. [Procedures comments](#asm-8)
+  9. [Optimisation](#asm-9)
+     1. [Zeroing](#asm-9-1)
+     2. [Comparing with zero](#asm-9-2)
+     3. [Incrementing and decrementing](#asm-9-3)
+     4. [Branching](#asm-9-4)
+     5. [Loops unrolling](#asm-9-5)
 
+<a name="asm-1"></a>
 ### 1. Syntax
 
 The Intel syntax should always be preferred, when possible, to the AT&T syntax, for clarity.  
@@ -991,6 +1038,7 @@ An exception is made for inline assembly, when compiling C code with Clang or GC
 
 The basic differences are the following:
 
+<a name="asm-1-1"></a>
 #### 1.1. Direction of Operands
 
 The direction of the operands in the Intel syntax is the opposite of AT&T syntax.  
@@ -1003,6 +1051,7 @@ In the Intel syntax, the destination operand comes first, followed by the source
     instr src,  dest # AT&T
 ```
 
+<a name="asm-1-2"></a>
 #### 1.2. Prefixes
 
 The Intel syntax doesn't use prefixes for register names or immediate operands, while the AT&T syntax uses the `%` prefix for registers and `$` for immediate operands:
@@ -1014,6 +1063,7 @@ The Intel syntax doesn't use prefixes for register names or immediate operands, 
     movq $1,  %rax # AT&T
 ```
 
+<a name="asm-1-3"></a>
 #### 1.3. Suffixes
 
 The Intel syntax doesn't use suffixes for mnemonics, while the AT&T syntax uses `b`, `w`, `l` and `q`.  
@@ -1031,6 +1081,7 @@ For memory operands, similar directives can be used (`BYTE`, `WORD`, `DWORD`, `Q
 	movl $1, %eax
 ```
 
+<a name="asm-1-4"></a>
 #### 1.4. Memory operands
 
 The Intel syntax uses `[]` for memory operands, while the AT&T syntax uses `()`:
@@ -1050,6 +1101,7 @@ mov  rax, segment:[ base + index * scale + displacement ] ; Intel
 movq %segment:displacement( base, index, scale ), %rax    # AT&T
 ```
     
+<a name="asm-2"></a>
 ### 2. Local labels
 
 Local labels inside a procedure should always start with a dot.  
@@ -1072,10 +1124,12 @@ procedure:
 Label names should be meaningful.  
 Don't use compiler style label names, like `L1:`.
 
+<a name="asm-3"></a>
 ### 3. Indentation
 
 Code should always be indented using four spaces.  Never use tabulations for indentation.
 
+<a name="asm-4"></a>
 ### 4. Alignment
 
 Mnemonics and operands should be aligned, in order to improve the code's readability, and a decent amount of spaces should be placed between the mnemonics and the operands:
@@ -1098,6 +1152,7 @@ movdqa xmm1, [rsi]
 movdqa [rdi], xmm1
 ```
 
+<a name="asm-5"></a>
 ### 5. Whitespace
 
 When using memory operands, inserts a white space between the brackets:
@@ -1124,6 +1179,7 @@ Not:
 mov rax, [rdi+8]
 ```
 
+<a name="asm-6"></a>
 ### 6. Comments
 
 Comments should be placed on a new line and should not exceed 80 columns in width:
@@ -1143,6 +1199,7 @@ xor rax, rax ; This is a comment
 Comments should be as meaningful as possible.  
 Don't simply describe what you are doing, but also why you are doing it.
 
+<a name="asm-7"></a>
 ### 7. Grouping
 
 Instructions should be grouped in a logical manner, with a newline between groups:
@@ -1160,6 +1217,7 @@ pxor     xmm0,   xmm0
 movdqa   xmm1,   [ rdi ]
 ```
 
+<a name="asm-8"></a>
 ### 8. Procedures comments
 
 All procedures should start with a standard comment, describing the procedure, the input and return registers, as well as killed registers, if any:
@@ -1210,10 +1268,12 @@ When no register is used as input or as return, or when no register is killed:
 ;------------------------------------------------------------------------------- 
 ```
 
+<a name="asm-9"></a>
 ### 9. Optimisation
 
 The following is not mandatory, but it's strongly advised to follow these recommendations, when writing performance-critical code.
 
+<a name="asm-9-1"></a>
 #### 9.1. Zeroing
 
 Always use `xor` to zero a register, instead of `mov`:
@@ -1228,6 +1288,7 @@ Not:
 mov rax, 0
 ```
 
+<a name="asm-9-2"></a>
 #### 9.2. Comparing with zero
 
 Always use `test` when comparing with zero, instead of `cmp`:
@@ -1244,6 +1305,7 @@ cmp  rax, 0
 je   .label
 ```
 
+<a name="asm-9-3"></a>
 #### 9.3. Incrementing and decrementing
 
 Always use `add` and `sub` when incrementing or decrementing a register, instead of `inc` or `dec`:
@@ -1261,11 +1323,12 @@ dec rbx
 ```
 While `inc` and `dec` are shorter, some processors have performance issues with those mnemonics.
 
+<a name="asm-9-4"></a>
 #### 9.4. Branching
 
 When using conditional jumps, the following rules should be observed in order to increase the overall performances (due to the CPUs branch prediction algorithm).
 
-##### Predict forward conditional branches to be not taken
+##### Predict forward conditional branches to be not taken:
 
 ```NASM
 test rax, rax
@@ -1278,7 +1341,7 @@ jz   .label
     ; Forward branch - Most unlikely
 ```
 
-##### Predict backward conditional branches to be taken
+##### Predict backward conditional branches to be taken:
 
 ```NASM
 .label:
@@ -1293,6 +1356,7 @@ jz   .label
 
 And of course, eliminate branches whenever possible.
 
+<a name="asm-9-5"></a>
 #### 9.5. Loops unrolling
 
 Whenever possible, unroll loops:
