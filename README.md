@@ -916,7 +916,7 @@ class Foo
 
 #### 3.4. Method definitions
 
-Except for templates, method definitions should never be on the header files.
+Except for templates, method should never be defined in the header files.
 
 ### 4. Templates
 
