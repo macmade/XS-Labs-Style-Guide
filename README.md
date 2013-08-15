@@ -24,7 +24,7 @@ It's not a common habit among coders, who usually prefers compact code.
 
 This is just a personal taste.  
 After 15 years of professional development, I like to see a lot of spaces in my own code. It's like letting the code breath.   
-Code is about rythm, and readability. And I think taking time to carefully align operators, declarations, etc. improves the overall readability and the feeling you can get while reading code.
+Code is about rhythm, and readability. And I think taking time to carefully align operators, declarations, etc. improves the overall readability and the feeling you can get while reading code.
 
 License
 -------
@@ -34,14 +34,236 @@ This style guide is published under the terms of the [FreeBSD documentation lice
 C Style Guide
 -------------
 
-### x. Indentation
+  1.  Indentation
+  2.  Ending line
+  3.  Comments
+  4.  Maximum number of columns
+  5.  Includes
+  6.  Whitespace
+      1. Operators
+      2. Parenthesis and brackets
+      3. Pointers
+      4. Casts
+      5. for loops
+  7.  Braces
+  8.  Alignment
+      1. Assignments
+      2. Variable declarations
+      3. Single line conditionals
+      4. Array subscripting operator
+  9.  Case and symbols naming
+  10. Variable declaration
+  11. Macros
+  12. Structs and unions
+  13. Enums
+  14. Typedefs
+  15. New lines
+  16. Header guards
+  17. Functions prototypes
+  18. Functions with no parameters
+  19. Inline functions
+  20. Dereferencing
+  21. Conditionals
+  22. Long if/else if statements
+  23. Compilation
+
+### 1. Indentation
 
 Code should always be indented using four spaces.  Never use tabulations for indentation.
 
-### x. Braces
+Preprocessor directives should also be indented:
+
+```C
+void foo( void )
+{
+    #ifdef FOO
+    /* ... */
+    #endif
+}
+```
+
+Not:
+
+```C
+void foo( void )
+{
+#ifdef FOO
+    /* ... */
+#endif
+}
+```
+
+### 2. Ending line
+
+Source and header files should always end with a single empty line.
+
+### 3. Comments
+
+Comments should always use the `/* */` notations.  
+Single line C++ style comments (`//`) are disallowed.
+
+A line of comment should whenever possible be no more that 80 columns.
+
+When a comment consists of a single line, place the `/* */` on the same line.  
+If the comments consists of multiple lines, place the `/* */` on a new line:
+
+```C
+/* Single line comment */
+
+/*
+ * Multiple
+ * line
+ * comment
+ */
+```
+
+When using multiple line comments, always align the `*` signs, as in the above example.
+
+### 4. Maximum number of columns
+
+The number of columns for a single line is not limited.  
+However, try whenever possible to wrap long lines in order to improve the overall readability.
+
+### 5. Includes
+
+Include directives should always come first, before any other declaration:
+
+```C
+#include <stdio.h>
+
+int x;
+```
+
+Not:
+
+```C
+int x;
+
+#include <stdio.h>
+```
+
+An exception is made when a header needs a specific macro to be set before inclusion:
+
+```C
+#define FOOBAR 1 /* Permitted */
+
+#include <foobar.h>
+```
+
+### 6. Whitespace
+
+#### 6.1 Operators
+
+A single whitespace character should always be used around all operators, except the increment/decrement and not operators:
+
+```C
+x = 1 + 2 + 3;
+
+x++;
+~x;
+
+if( !x )
+{
+    /* .... */
+}
+```
+
+Not:
+
+```C
+x=1+2+3;
+
+x ++;
+~ x;
+
+if( ! x )
+{
+    /* .... */
+}
+```
+
+#### 6.2 Parenthesis and brackets
+
+A single whitespace character should always be used inside parenthesis and brackets, but never before:
+
+```C
+x[ 0 ] = 0;
+
+foo( x );
+
+if( y == 0 )
+{
+    /*  */
+}
+```
+
+Not:
+
+```C
+x[0] = 0;
+
+foo (x);
+
+if (y == 0)
+{
+    /*  */
+}
+```
+
+#### 6.3 Pointers
+
+The pointer sign should alway have a leading and trailing space:
+
+```C
+int * x;
+```
+
+Not:
+
+```C
+int* x;
+int *x;
+```
+
+#### 6.4 Casts
+
+No whitespace should be added after a cast. A single whitespace should be used after the opening parenthesis and before the closing one:
+
+```C
+x = ( char * )y;
+```
+
+Not:
+
+```C
+x = ( char * ) y;
+```
+
+#### 6.5 `for` loops
+
+When using `for` loops, a single whitespace character should be used after the semicolons:
+
+```C
+for( i = 0; i < 10; i++ )
+{
+	/* ... */
+}
+```
+
+Not:
+
+```C
+for( i = 0;i < 10;i++ )
+{
+	/* ... */
+}
+```
+
+### 7. Braces
 
 Braces should always be placed on an empty line.  
-This apply for all constructs (functions, conditions, loops, etc.):
+This apply for all constructs (functions, conditions, loops, etc.).  
+Code inside braces should be indented by four spaces:
 
 ```C
 void foo( void )
@@ -84,16 +306,16 @@ An exceptions can be made for very simple constructs:
 else if( ... ) { x = 2; }
 ```
 
-### x. Alignment
+### 8. Alignment
 
-#### x.1 Assignments
+#### 8.1 Assignments
 
 Always align assignments:
 
 ```C
-x      = 1;
-foo    = 2;
-foobar = 2;
+x       = 1;
+foo     = 2;
+foobar += 2;
 ```
 
 Not:
@@ -101,10 +323,10 @@ Not:
 ```C
 x = 1;
 foo = 2;
-foobar = 2;
+foobar += 2;
 ```
 
-If using multiple lines in an assigment, aligns the extra lines to the equal sign:
+If using multiple lines in an assignment, aligns the extra lines to the equal sign:
 
 ```C
 x      = 1;
@@ -130,7 +352,7 @@ foobar = ( x ) ? 2 : x + 3;
 foo    = ( foobar ) ? foobar : x;
 ```
 
-#### x.1. Variable declarations
+#### 8.2. Variable declarations
 
 Always aligns the names of variables:
 
@@ -148,7 +370,14 @@ unsigned long y;
 float z;
 ```
 
-#### x.2. Single line conditionals
+When using pointers, place the pointer sign next to the variable name:
+
+```C
+int           * x;
+unsigned long * y;
+```
+
+#### 8.3. Single line conditionals
 
 If using single line conditional statements (see above), align the `if`/`else` statements, as well as the opening/closing braces and comparison operators:
 
@@ -166,7 +395,7 @@ else if( foobar == 1 ) { x = 0xFFFFFFFF; }
 else { x = 0; }
 ```
 
-#### x.3. Array subscripting operator
+#### 8.4. Array subscripting operator
 
 Always align the closing brackets when using the array subscripting operator. Indexes should be indented in a logical manner:
 
@@ -182,45 +411,21 @@ x[ 1 ]   = 0;
 x[ 100 ] = 0;
 ```
 
-### Pointers
+### 9. Case and symbols naming
 
-The pointer sign should alway have a leading and trailing space:
+Local variables should never start with an underscore, and should always start with a lowercase letter.  
+Lower camel-case is recommended.
 
-```C
-int * x;
-```
-
-Not:
-
-```C
-int* x;
-int *x;
-```
-
-When aligning, place the pointer sign next to the variable name:
+For global symbols (variables and functions), upper camel-case is usually recommended.  
+A single underscore may be used to denote private symbols, if they are not static.  
+Underscores may be used to simulate namespaces.
 
 ```C
-int           * x;
-unsigned long * y;
+void SomePackage_SomePublicFunction( void );
+void _SomePackage_SomePrivateFunction( void );
+
+extern int SomeInteger;
 ```
-
-### x. Macros
-
-Macros should always be in uppercase.
-
-```C
-#define FOO         1
-```
-
-If a macro takes parameters, the parameters names should begin and end with a single underscore:
-
-```C
-#define BAR( _x_ )  ( ( _x_ ) + 1 )
-```
-
-As in the above example, parenthesis should always be used around a macro parameter.
-
-### x. Static symbols
 
 Static symbols should always start with two underscores, and have a value:
 
@@ -236,7 +441,172 @@ static int x;
 
 This also applies to static functions.
 
-### x. Header guards
+### 10. Variable declaration
+
+Local variables should be declared without a value, and before any other statement:
+
+```C
+void foo( void )
+{
+    int x;
+    int y;
+    
+    x = 0;
+    x = 1;
+    
+    foo();
+    foobar();
+}
+```
+
+Not:
+
+```C
+void foo( void )
+{
+    bar();
+    
+    int x = 0;
+    
+    foobar();
+    
+    int y = 0;
+}
+```
+
+The same applies for `for` loops:
+
+```C
+int i;
+
+for( i = 0; i < 10; i++ )
+{
+    /* ... */
+}
+```
+
+Not:
+
+```C
+for( int i = 0; i < 10; i++ )
+{
+    /* ... */
+}
+```
+
+### 11. Macros
+
+Macros should always be in uppercase.
+
+```C
+#define FOO         1
+```
+
+If a macro takes parameters, the parameters names should begin and end with a single underscore:
+
+```C
+#define BAR( _x_ )  ( ( _x_ ) + 1 )
+```
+
+As in the above example, parenthesis should always be used around a macro parameter.
+
+### 12. Structs and unions
+
+Members of structs and unions should be properly aligned, as mentioned before:
+
+```C
+struct foo
+{
+	int           x;
+	unsigned long y;
+};
+
+union bar
+{
+	int           x;
+	unsigned long y;
+};
+```
+
+When manually padding a struct, use two leading underscore for the member name, and a trailing number, prefaced with an underscore.  
+Always use a `char` array to manually pad a structure:
+
+```C
+struct foo
+{
+	char s;
+	char __pad_0[ 3 ];
+	int  x;
+};
+```
+
+### 13. Enums
+
+Enum values should be properly aligned, as mentioned before.  
+A value should always be provided. Hexadecimal is usually preferred:
+
+```C
+enum
+{
+	Foo    = 0x01,
+	Bar    = 0x02,
+	Foobar = 0x10
+};
+```
+
+Not:
+
+```C
+enum
+{
+	Foo,
+	Bar,
+	Foobar = 0x10
+};
+```
+
+### 14. Typedefs
+
+Simple typedefs are declared on a single line:
+
+```C
+typedef int foo;
+```
+
+With structs and unions, place the type name on a new line:
+
+```C
+typedef struct
+{
+    int x;
+    int y;
+}
+foo;
+```
+
+### 15. New lines
+
+An empty line should be used to separate logical parts of the code, as well as to separate function calls and assignments:
+
+```C
+x = 0;
+y = 0;
+
+foo();
+
+z = 2;
+```
+
+Not:
+
+```C
+x = 0;
+y = 0;
+foo();
+y = 2;
+```
+
+### 16. Header guards
 
 All headers should be properly guarded:
 
@@ -254,7 +624,21 @@ It should consist of the name of the header file (optionally with directories pr
 
 For instance, for `include/foo/bar/foobar.h`, this should be `__FOO_BAR_FOOBAR_H__`.
 
-### x. Functions with no parameters
+### 17. Functions prototypes
+
+Function prototypes should always declare the parameters names:
+
+```C
+void foo( int x, int y );
+```
+
+Not:
+
+```C
+void foo( int, int );
+```
+
+### 18. Functions with no parameters
 
 Functions without parameters should always be declared as taking `void`:
 
@@ -266,6 +650,113 @@ Not:
 
 ```C
 void foo();
+```
+
+### 19. Inline functions
+
+Inline functions should generally avoided, unless there's a very good and specific reason to make them inline.
+
+### 20. Dereferencing
+
+When using the dereference operator `*`, always use an extra set of parenthesis:
+
+```C
+*( x ) = 1;
+y      = *( x );
+```
+
+Not:
+
+```C
+*x = 1;
+y  = *x;
+```
+
+### 21. Conditionals
+
+Always prefer testing with `==`, even with boolean values:
+
+```C
+if( b == true )
+{
+    /* ... */
+}
+```
+
+Not:
+
+```C
+if( b )
+{
+    /* ... */
+}
+```
+
+Also avoid using `!` in a conditional:
+
+```C
+if( b == false || p == null )
+{
+    /* ... */
+}
+```
+
+Not:
+
+```C
+if( !b || !p )
+{
+    /* ... */
+}
+```
+
+### 22. Long `if`/`else if` statements
+
+Very long `if`/`else if` statements should be wrapped the following way:
+
+```C
+if
+(
+       x      == 1
+    && y      == 2
+    && foobar == 3
+)
+{
+   /* ... */
+}
+```
+
+Parenthesis are placed on a new line. Variable names and comparison operators should be aligned.
+
+When using extra parenthesis, apply the same rules:
+
+```C
+if
+(
+       x == 1
+    && y == 2
+    &&
+    (
+          z      == 3
+       || foobar == 4
+    )
+)
+{
+   /* ... */
+}
+```
+
+### 23. Compilation
+
+Always compiles your code with `-Werror` or similar, and always use the highest possible error reporting level.
+
+When function parameters are not used, cast them to `void` to prevent a warning:
+
+```C
+void foo( int unused )
+{
+    ( void )unused;
+}
 ```
 
 C++ Style Guide
