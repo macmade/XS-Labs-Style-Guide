@@ -187,7 +187,7 @@ movdqa [rdi], xmm1
 When using memory operands, inserts a white space between the brackets:
 
 ```NASM
-    mov rax, [ rdi ]
+mov rax, [ rdi ]
 ```
 
 Not:
