@@ -34,7 +34,239 @@ This style guide is published under the terms of the [FreeBSD documentation lice
 C Style Guide
 -------------
 
-... [ in progress ] ...
+### x. Indentation
+
+Code should always be indented using four spaces.  Never use tabulations for indentation.
+
+### x. Braces
+
+Braces should always be placed on an empty line.  
+This apply for all constructs (functions, conditions, loops, etc.):
+
+```C
+void foo( void )
+{
+    if( ... )
+    {
+    	/* ... */
+    }
+    else if( ... )
+    {
+    	/* ... */
+    }
+    else
+    {
+    	/* ... */
+    }
+    
+    for( ... )
+    {
+    	/* ... */
+    }
+    
+    while( ... )
+    {
+    	/* ... */
+    }
+    
+    do
+    {
+    	/* ... */
+    }
+    while( ... );
+}
+```
+
+An exceptions can be made for very simple constructs:
+
+```C
+     if( ... ) { x = 1; }
+else if( ... ) { x = 2; }
+```
+
+### x. Alignment
+
+#### x.1 Assignments
+
+Always align assignments:
+
+```C
+x      = 1;
+foo    = 2;
+foobar = 2;
+```
+
+Not:
+
+```C
+x = 1;
+foo = 2;
+foobar = 2;
+```
+
+If using multiple lines in an assigment, aligns the extra lines to the equal sign:
+
+```C
+x      = 1;
+foobar = x
+       + 1
+       + 2;
+```
+
+When using conditional assignment, aligns the `?` and `:` signs whenever possible.  
+The `?` sign should be aligned by adding whitespaces before the closing parenthesis:
+
+```C
+x      = 1;
+foobar = ( x      ) ? 2      : x + 3;
+foo    = ( foobar ) ? foobar : x;
+```
+
+Not:
+
+```C
+x      = 1;
+foobar = ( x ) ? 2 : x + 3;
+foo    = ( foobar ) ? foobar : x;
+```
+
+#### x.1. Variable declarations
+
+Always aligns the names of variables:
+
+```C
+int           x;
+unsigned long y;
+float         z;
+```
+
+Not:
+
+```C
+int x;
+unsigned long y;
+float z;
+```
+
+#### x.2. Single line conditionals
+
+If using single line conditional statements (see above), align the `if`/`else` statements, as well as the opening/closing braces and comparison operators:
+
+```C
+     if( x      == 1 ) { foobar = 1;          }
+else if( foobar == 1 ) { x      = 0xFFFFFFFF; }
+else				   { x      = 0;          }
+```
+
+Not:
+
+```C
+if( x == 1 ) { foobar = 1; }
+else if( foobar == 1 ) { x = 0xFFFFFFFF; }
+else { x = 0; }
+```
+
+#### x.3. Array subscripting operator
+
+Always align the closing brackets when using the array subscripting operator. Indexes should be indented in a logical manner:
+
+```C
+x[   1 ] = 0;
+x[ 100 ] = 0;
+```
+
+Not:
+
+```C
+x[ 1 ]   = 0;
+x[ 100 ] = 0;
+```
+
+### Pointers
+
+The pointer sign should alway have a leading and trailing space:
+
+```C
+int * x;
+```
+
+Not:
+
+```C
+int* x;
+int *x;
+```
+
+When aligning, place the pointer sign next to the variable name:
+
+```C
+int           * x;
+unsigned long * y;
+```
+
+### x. Macros
+
+Macros should always be in uppercase.
+
+```C
+#define FOO         1
+```
+
+If a macro takes parameters, the parameters names should begin and end with a single underscore:
+
+```C
+#define BAR( _x_ )  ( ( _x_ ) + 1 )
+```
+
+As in the above example, parenthesis should always be used around a macro parameter.
+
+### x. Static symbols
+
+Static symbols should always start with two underscores, and have a value:
+
+```C
+static int __x = 0;
+```
+
+Not:
+
+```C
+static int x;
+```
+
+This also applies to static functions.
+
+### x. Header guards
+
+All headers should be properly guarded:
+
+```C
+#ifndef __FOO_H__
+#define __FOO_H__
+
+/* ... */
+
+#endif
+```
+
+The name of the macro used as header guard should always be in uppercase, start and end with two underscores.  
+It should consist of the name of the header file (optionally with directories prefixes, separated by a single underscore), and a trailing `_H`.
+
+For instance, for `include/foo/bar/foobar.h`, this should be `__FOO_BAR_FOOBAR_H__`.
+
+### x. Functions with no parameters
+
+Functions without parameters should always be declared as taking `void`:
+
+```C
+void foo( void );
+```
+
+Not:
+
+```C
+void foo();
+```
 
 C++ Style Guide
 ---------------
@@ -75,7 +307,7 @@ An exception is made for inline assembly, when compiling C code with Clang or GC
 
 The basic differences are the following:
 
-#### 1.1 Direction of Operands
+#### 1.1. Direction of Operands
 
 The direction of the operands in the Intel syntax is the opposite of AT&T syntax.  
 In the Intel syntax, the destination operand comes first, followed by the source operand:
@@ -87,7 +319,7 @@ In the Intel syntax, the destination operand comes first, followed by the source
     instr src,  dest # AT&T
 ```
 
-#### 1.2 Prefixes
+#### 1.2. Prefixes
 
 The Intel syntax doesn't use prefixes for register names or immediate operands, while the AT&T syntax uses the `%` prefix for registers and `$` for immediate operands:
 
@@ -98,7 +330,7 @@ The Intel syntax doesn't use prefixes for register names or immediate operands, 
     movq $1,  %rax # AT&T
 ```
 
-#### 1.3 Suffixes
+#### 1.3. Suffixes
 
 The Intel syntax doesn't use suffixes for mnemonics, while the AT&T syntax uses `b`, `w`, `l` and `q`.  
 The size of the operands is automatically assumed when using registers.  
@@ -115,7 +347,7 @@ For memory operands, similar directives can be used (`BYTE`, `WORD`, `DWORD`, `Q
 	movl $1, %eax
 ```
 
-#### 1.4 Memory operands
+#### 1.4. Memory operands
 
 The Intel syntax uses `[]` for memory operands, while the AT&T syntax uses `()`:
 ```NASM
@@ -298,7 +530,7 @@ When no register is used as input or as return, or when no register is killed:
 
 The following is not mandatory, but it's strongly advised to follow these recommendations, when writing performance-critical code.
 
-#### 9.1 Zeroing
+#### 9.1. Zeroing
 
 Always use `xor` to zero a register, instead of `mov`:
 
@@ -312,7 +544,7 @@ Not:
 mov rax, 0
 ```
 
-#### 9.2 Comparing with zero
+#### 9.2. Comparing with zero
 
 Always use `test` when comparing with zero, instead of `cmp`:
 
@@ -328,7 +560,7 @@ cmp  rax, 0
 je   .label
 ```
 
-#### 9.3 Incrementing and decrementing
+#### 9.3. Incrementing and decrementing
 
 Always use `add` and `sub` when incrementing or decrementing a register, instead of `inc` or `dec`:
 
@@ -345,7 +577,7 @@ dec rbx
 ```
 While `inc` and `dec` are shorter, some processors have performance issues with those mnemonics.
 
-#### 9.4 Branching
+#### 9.4. Branching
 
 When using conditional jumps, the following rules should be observed in order to increase the overall performances (due to the CPUs branch prediction algorithm).
 
@@ -377,7 +609,7 @@ jz   .label
 
 And of course, eliminate branches whenever possible.
 
-#### 9.5 Loops unrolling
+#### 9.5. Loops unrolling
 
 Whenever possible, unroll loops:
 
