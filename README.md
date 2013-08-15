@@ -66,7 +66,8 @@ C Style Guide
   21. Conditionals
   22. Switch statements
   23. Long if/else if statements
-  24. Compilation
+  24. Inline documentation
+  25. Compilation
 
 ### 1. Indentation
 
@@ -155,7 +156,7 @@ An exception is made when a header needs a specific macro to be set before inclu
 
 #### 6.1 Operators
 
-A single whitespace character should always be used around all operators, except the increment/decrement and not operators:
+A single whitespace character should always be used around all operators except unary operators:
 
 ```C
 x = 1 + 2 + 3;
@@ -311,7 +312,7 @@ else if( ... ) { x = 2; }
 
 #### 8.1 Assignments
 
-Always align assignments:
+Always align consecutive assignments:
 
 ```C
 x       = 1;
@@ -819,7 +820,11 @@ if
 }
 ```
 
-### 24. Compilation
+### 24. Inline documentation
+
+Documented code should prefer [Apple's HeaderDoc](https://developer.apple.com/library/mac/documentation/DeveloperTools/Conceptual/HeaderDoc/intro/intro.html) syntax rather than JavaDoc.
+
+### 25. Compilation
 
 Always compiles your code with `-Werror` or similar, and always use the highest possible error reporting level.
 
