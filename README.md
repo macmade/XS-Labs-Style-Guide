@@ -64,8 +64,9 @@ C Style Guide
   19. Inline functions
   20. Dereferencing
   21. Conditionals
-  22. Long if/else if statements
-  23. Compilation
+  22. Switch statements
+  23. Long if/else if statements
+  24. Compilation
 
 ### 1. Indentation
 
@@ -674,6 +675,46 @@ y  = *x;
 
 ### 21. Conditionals
 
+Always use braces with conditionals:
+
+```C
+if( x == 1 )
+{
+    x = 2;
+}
+```
+
+Not:
+
+```C
+if( x == 1 )
+    x = 2;
+```
+
+Don't use `else` clauses when not necessary:
+
+```C
+if( x == 0 )
+{
+    return true;
+}
+
+return false;
+```
+
+Not:
+
+```C
+if( x == 0 )
+{
+    return true;
+}
+else
+{
+	return false;
+}
+```
+
 Always prefer testing with `==`, even with boolean values:
 
 ```C
@@ -710,7 +751,39 @@ if( !b || !p )
 }
 ```
 
-### 22. Long `if`/`else if` statements
+### 22. Switch statements
+
+When using switch statements, separate each `case` with an empty line and adds an empty line after the `case`.  
+The `break` statement should be indented, in regard to the `case` statement.
+
+```C
+switch( x )
+{
+    case 1:
+        
+        /* ... */
+        break;
+        
+    default:
+        
+        /* ... */
+        break;
+}
+```
+
+An exception can be made for very simple switch statements:
+
+```C
+switch( x )
+{
+    case 1:  y      = 0;          break;
+    default: foobar = 0xFFFFFFFF; break;
+}
+```
+
+In such a case, `break` statements should be aligned, as well as assignment operators, if any.
+
+### 23. Long `if`/`else if` statements
 
 Very long `if`/`else if` statements should be wrapped the following way:
 
@@ -746,7 +819,7 @@ if
 }
 ```
 
-### 23. Compilation
+### 24. Compilation
 
 Always compiles your code with `-Werror` or similar, and always use the highest possible error reporting level.
 
