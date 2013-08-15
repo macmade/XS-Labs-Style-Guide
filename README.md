@@ -11,8 +11,9 @@ Table Of Contents
  1. [Objective-C Style Guide](#objc)
  1. [x86 Assembly Style Guide](#asm)
 
-About [about]
--------------
+<a name="about"></a>
+About
+-----
 
 These are the coding conventions used for all recent [XS-Labs](http://www.xs-labs.com/) projects.  
 Feel free to comment, raise issues, fork and/or adapt this document.
@@ -26,11 +27,13 @@ This is just a personal taste.
 After 15 years of professional development, I like to see a lot of spaces in my own code. It's like letting the code breath.   
 Code is about rhythm, and readability. And I think taking time to carefully align operators, declarations, etc. improves the overall readability and the feeling you can get while reading code.
 
+<a name="license"></a>
 License
 -------
 
 This style guide is published under the terms of the [FreeBSD documentation license](http://www.freebsd.org/copyright/freebsd-doc-license.html).
 
+<a name="c"></a>
 C Style Guide
 -------------
 
