@@ -84,7 +84,7 @@ In the Intel syntax, the destination operand comes first, followed by the source
     instr dest, src  ; Intel
 ```
 ```GAS
-    instr src,  dest // AT&T
+    instr src,  dest # AT&T
 ```
 
 #### 1.2 Prefixes
@@ -95,7 +95,7 @@ The Intel syntax doesn't use prefixes for register names or immediate operands, 
     mov  rax, 1    ; Intel
 ```
 ```GAS
-    movq $1,  %rax // AT&T
+    movq $1,  %rax # AT&T
 ```
 
 #### 1.3 Suffixes
@@ -110,7 +110,7 @@ For memory operands, similar directives can be used (`BYTE`, `WORD`, `DWORD`, `Q
 	mov  eax, 1
 ```
 ```GAS
-    // AT&T
+    # AT&T
 	movq $1, %rax
 	movl $1, %eax
 ```
@@ -122,7 +122,7 @@ The Intel syntax uses `[]` for memory operands, while the AT&T syntax uses `()`:
     mov  rax, [ rdi + 8 ] ; Intel
 ```
 ```GAS
-    movq 8( %rdi ), %rax  // AT&T
+    movq 8( %rdi ), %rax  # AT&T
 ```
 
 The index, scale, displacement and segment also use a different notation:
@@ -131,7 +131,7 @@ The index, scale, displacement and segment also use a different notation:
 mov  rax, segment:[ base + index * scale + displacement ] ; Intel
 ```
 ```GAS
-movq %segment:displacement( base, index, scale ), %rax    // AT&T
+movq %segment:displacement( base, index, scale ), %rax    # AT&T
 ```
     
 ### 2. Local labels
