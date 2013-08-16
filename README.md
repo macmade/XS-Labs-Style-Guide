@@ -109,7 +109,7 @@ Source and header files should always end with a single empty line.
 ### 3. Comments
 
 Comments should always use the `/* */` notations.  
-Single line C++ style comments (`//`) are disallowed.
+Single line C++ style comments (`//`) are strictly prohibited.
 
 A line of comment should whenever possible be no more that 80 columns.
 
@@ -715,7 +715,7 @@ void foo();
 <a name="c-19"></a>
 ### 19. Inline functions
 
-Inline functions should generally avoided, unless there's a very good and specific reason to make them inline.
+Inline functions should generally be avoided, unless there's a very good and specific reason to make them inline.
 
 <a name="c-20"></a>
 ### 20. Dereferencing
