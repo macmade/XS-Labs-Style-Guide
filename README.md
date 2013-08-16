@@ -937,7 +937,8 @@ C++ Style Guide
   5. [Templates](#cpp-5)
   6. [Using](#cpp-6)
   7. [Passing/Returning instances by value or reference](#cpp-7)
-  8. [Using C functions](#cpp-8)
+  8. [Includes and forward declarations](#cpp-8)
+  9. [Using C functions](#cpp-9)
 
 <a name="cpp-2"></a>
 ### 1. Files and files extensions
@@ -956,7 +957,7 @@ Single line C++ comments are allowed, even if the `/*  */` notation is usually p
 <a name="cpp-3"></a>
 ### 3. Namespaces
 
-Namespaces should always use the upper camel-case rule.
+Namespaces should always follow the upper camel-case rule.
 
 <a name="cpp-4"></a>
 ### 4. Classes
@@ -964,8 +965,8 @@ Namespaces should always use the upper camel-case rule.
 <a name="cpp-4-1"></a>
 #### 4.1. Naming
 
-C++ classes should always use the upper camel-case rule.  
-Methods should always use the lower camel-case rule, as well as properties.
+C++ classes should always follow the upper camel-case rule.  
+Methods should always follow the lower camel-case rule, as well as properties.
 
 Private members should always have a leading underscore.
 
@@ -1066,7 +1067,38 @@ An exception is made for STL classes, like `std::string`, `std::vector`, `std::m
 
 <a name="cpp-8"></a>
 
-### 8. Using C functions
+### 8. Includes and forward declarations
+
+The number of included files contained in the headers should be limited.  
+Always use forward declarations when possible:
+
+```C++
+class Foo;
+
+class Bar
+{
+    public:
+        
+        Bar( Foo * f );
+};
+```
+
+Not:
+
+```C++
+#include "Foo.h"
+
+class Bar
+{
+    public:
+        
+        Bar( Foo * f );
+};
+```
+
+<a name="cpp-9"></a>
+
+### 9. Using C functions
 
 The use of C functions is generally discouraged unless there's no C++ equivalent, or if there's a specific reason not to use a C++ equivalent.
 
@@ -1098,6 +1130,16 @@ Objective-C Style Guide
   8.  [`NULL`, `nil` and `Nil`](#objc-8)
   9.  [Blocks](#objc-9)
   10. [Classes](#objc-10)
+      1.  [Naming](#objc-10-1)
+      2.  [Interface declaration](#objc-10-2)
+      3.  [Instance variables](#objc-10-3)
+      4.  [Properties](#objc-10-4)
+      5.  [Properties atomicity](#objc-10-5)
+      6.  [Methods](#objc-10-6)
+      7.  [Imports and forward declarations](#objc-10-7)
+      8.  [Private methods](#objc-10-8)
+      9.  [Categories](#objc-10-9)
+      10. [Protocols](#objc-10-10)
   11. [Singletons/Shared instances](#objc-11)
   12. [NSLog](#objc-12)
   13. [Multithreading](#objc-13)
@@ -1272,6 +1314,274 @@ Blocks without arguments should always be defined as taking `void`.
 
 <a name="objc-10"></a>
 ### 10. Classes
+
+  1.  [Naming](#objc-10-1)
+  2.  [Interface declaration](#objc-10-2)
+  3.  [Instance variables](#objc-10-3)
+  4.  [Properties](#objc-10-4)
+  5.  [Properties atomicity](#objc-10-5)
+  6.  [Methods](#objc-10-6)
+  7.  [Imports and forward declarations](#objc-10-7)
+  8.  [Private methods](#objc-10-8)
+  9.  [Categories](#objc-10-9)
+  10. [Protocols](#objc-10-10)
+
+<a name="objc-10-1"></a>
+#### 10.1. Naming
+
+The name of classes should follow the upper camel-case rule.
+
+<a name="objc-10-2"></a>
+#### 10.2. Interface declaration
+
+The interface declaration should follow the following rules:
+
+The `@public`, `@protected` and `@private` keywords should always be present (even if there's no ivar with such a visibility), and should not be indented.  
+An empty line should be placed directly after.
+
+Public ivars should come first, followed by protected and private ivars.  
+All ivars should be indented by four spaces.
+
+Properties and methods should be indented by four spaces.  
+Properties should come first, followed by methods.
+
+The `:` sign after the class name should have a trailing whitespace character, but never a leading one.
+
+If protocols are implemented, the opening `<` sign should have a leading and trailing whitespace character.  
+The closing `>` sign should have a leading whitespace character.  
+A single whitespace character should be placed after the comma, when implementing multiple protocols.
+
+Example:
+
+```Objective-C
+@interface Foobar: NSObject < Foo, Bar >
+{
+@public
+    
+    /* Public ivars */
+    
+@protected
+    
+    /* Protected ivars */
+    
+@private
+    
+    /* Private ivars */
+}
+
+/* Properties */
+
+/* Methods */
+
+@end
+```
+
+<a name="objc-10-3"></a>
+#### 10.3. Instance variables
+
+Instance variables should follow the lower camel-case rule.
+
+Instance variables should never be public.  
+Use properties instead.
+
+Private instance variables should start with a single leading underscore.
+
+Except when using headerdoc comments, the name of the instance variables should be aligned, as mentioned in the alignment topic of the C style guide:
+
+```Objective-C
+@public
+    
+    NSUInteger     _x;
+    NSArray      * _array;
+    NSDictionary * _dict;
+```
+
+Not:
+
+```Objective-C
+@public
+    
+    NSUInteger _x;
+    NSArray * _array;
+    NSDictionary * _dict;
+```
+
+<a name="objc-10-4"></a>
+#### 10.4. Properties
+
+Properties variables should follow the lower camel-case rule.
+
+Properties should always declare their full attributes:
+
+```Objective-C
+@property( nonatomic, readwrite, assign ) NSUInteger x;
+```
+
+Not:
+
+```Objective-C
+@property( assign ) NSUInteger x;
+```
+
+<a name="objc-10-5"></a>
+#### 10.5. Properties atomicity
+
+Properties should generally be declared as `atomic`, unless there's a specific reason not to do so.
+
+An exception is made for `IBOutlet` properties, which should always be `nonatomic`.
+
+<a name="objc-10-6"></a>
+#### 10.6. Methods
+
+Methods should follow the lower camel-case rule.  
+The use of a leading underscore is strictly prohibited.
+
+Empty parameter names are discouraged.
+
+A trailing whitespace should be used after the `+` or `-` sign.  
+The method's return type and argument's types should follow the same rule as casts, as mentioned in the C style guide.  
+A trailing whitespace character should be used after the `:` sign, but not before:
+
+```Objective-C
+- ( void )methodWithObject1: ( id )object object2: ( id )object;
+```
+
+Not:
+
+```Objective-C
+-( void ) methodWithObject1 :( id ) object object2 :( id ) object;
+```
+
+Parameter names should be as explicit as possible.
+
+The use of a `the` or `a` prefix for a parameter name is strictly prohibited.
+
+```Objective-C
+( id )object
+```
+
+Not:
+
+```Objective-C
+( id )anObject
+```
+
+<a name="objc-10-7"></a>
+#### 10.7. Imports and forward declarations
+
+The number of included files contained in the headers should be limited.  
+Always use forward declarations when possible:
+
+```Objective-C
+@class Foo;
+
+@interface Bar
+{}
+
+- ( id )initWithFoo: ( Foo * )foo;
+
+@end
+```
+
+Not:
+
+```Objective-C
+#import "Foo.h";
+
+@interface Bar
+{}
+
+- ( id )initWithFoo: ( Foo * )foo;
+
+@end
+```
+
+<a name="objc-10-8"></a>
+#### 10.8. Private methods
+
+Private methods should be declared and defined in a category named `Private`, within a specific category header and source file file containing only the private methods.  
+
+The use of an informal protocol in the main implementation is strictly prohibited:
+
+```Objective-C
+#import "Foo.h";
+#import "Foo+Private.h";
+
+@implementation Foo
+
+@end
+```
+
+Not:
+
+```Objective-C
+#import "Foo.h";
+
+@interface Foo()
+
+@end
+
+@implementation Foo
+
+@end
+```
+
+<a name="objc-10-9"></a>
+#### 10.9. Categories
+
+Each category should have its own header and source file.  
+
+Declaration should be as follow, with a single whitespace character around the category name, and no leading whitespace before the `(` sign:
+
+```Objective-C
+@interface Foo( CategoryName )
+```
+
+Not:
+
+```Objective-C
+@interface Foo (CategoryName)
+```
+
+<a name="objc-10-10"></a>
+#### 10.10. Protocols
+
+Each protocol should be implemented in a specific category, named as the protocol, within a specific header and source file.  
+If the protocol conformance is not intended to be public, the main interface file should not declare it.
+
+For instance, a `Foo` class implementing `NSTableViewDelegate` (for internal use).
+
+`Foo.h`:
+
+```Objective-C
+@interface Foo: NSObject
+{}
+
+@end
+```
+
+`Foo+NSTableViewDelegate.h`:
+
+```Objective-C
+#import "Foo.h"
+
+@interface Foo( NSTableViewDelegate ) < NSTableViewDelegate >
+{}
+
+@end
+```
+
+`Foo+NSTableViewDelegate.m`:
+
+```Objective-C
+#import "Foo+NSTableViewDelegate.h"
+
+@implementation Foo( NSTableViewDelegate )
+
+/* ... */
+
+@end
+```
 
 <a name="objc-11"></a>
 ### 11. Singletons/Shared instances
