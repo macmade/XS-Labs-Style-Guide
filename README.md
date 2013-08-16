@@ -1389,7 +1389,7 @@ Private instance variables should start with a single leading underscore.
 Except when using headerdoc comments, the name of the instance variables should be aligned, as mentioned in the alignment topic of the C style guide:
 
 ```Objective-C
-@public
+@private
     
     NSUInteger     _x;
     NSArray      * _array;
@@ -1399,7 +1399,7 @@ Except when using headerdoc comments, the name of the instance variables should 
 Not:
 
 ```Objective-C
-@public
+@private
     
     NSUInteger _x;
     NSArray * _array;
