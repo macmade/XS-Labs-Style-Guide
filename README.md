@@ -57,8 +57,8 @@ C Style Guide
   9.  [Case and symbols naming](#c-9)
   10. [Variable declaration](#c-10)
   11. [Macros](#c-111)
-  12. [Structs and unions](#c-12)
-  13. [Enums](#c-13)
+  12. [Structures and unions](#c-12)
+  13. [Enumerated types](#c-13)
   14. [Typedefs](#c-14)
   15. [New lines](#c-14)
   16. [Header guards](#c-16)
@@ -69,8 +69,9 @@ C Style Guide
   21. [Conditionals](#c-21)
   22. [Switch statements](#c-22)
   23. [Long `if/else if` statements](#c-23)
-  24. [Inline documentation](#c-24)
-  25. [Compilation](#c-25)
+  24. [C++ compatibility](#c-24)
+  25. [Inline documentation](#c-25)
+  26. [Compilation](#c-26)
 
 <a name="c-1"></a>
 ### 1. Indentation
@@ -536,9 +537,9 @@ If a macro takes parameters, the parameters names should begin and end with a si
 As in the above example, parenthesis should always be used around a macro parameter.
 
 <a name="c-12"></a>
-### 12. Structs and unions
+### 12. Structures and unions
 
-Members of structs and unions should be properly aligned, as mentioned before:
+Members of structures and unions should be properly aligned, as mentioned before:
 
 ```C
 struct foo
@@ -567,7 +568,7 @@ struct foo
 ```
 
 <a name="c-13"></a>
-### 13. Enums
+### 13. Enumrated types
 
 Enum values should be properly aligned, as mentioned before.  
 A value should always be provided. Hexadecimal is usually preferred:
@@ -601,7 +602,7 @@ Simple typedefs are declared on a single line:
 typedef int foo;
 ```
 
-With structs, unions and enums place the type name on a new line:
+With structures, unions and enumrated types place the type name on a new line:
 
 ```C
 typedef struct
@@ -610,6 +611,30 @@ typedef struct
     int y;
 }
 foo;
+```
+
+For enumrated types, each value should be prefixed by the type name:
+
+```C
+typedef enum
+{
+    FooX = 0,
+    FooY = 1,
+    FooZ = 2
+}
+Foo;
+```
+
+Not:
+
+```C
+typedef enum
+{
+    X = 0,
+    Y = 1,
+    Z = 2
+}
+Foo;
 ```
 
 <a name="c-15"></a>
@@ -859,12 +884,29 @@ if
 ```
 
 <a name="c-24"></a>
-### 24. Inline documentation
+### 24. C++ compatibility
+
+All headers should be compatible with C++, using `extern "C"`:
+
+```C
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* ... */
+
+#ifdef __cplusplus
+}
+#endif
+```
+
+<a name="c-254"></a>
+### 25. Inline documentation
 
 Documented code should prefer [Apple's HeaderDoc](https://developer.apple.com/library/mac/documentation/DeveloperTools/Conceptual/HeaderDoc/intro/intro.html) syntax rather than JavaDoc.
 
-<a name="c-25"></a>
-### 25. Compilation
+<a name="c-26"></a>
+### 26. Compilation
 
 Always compiles your code with `-Werror` or similar, and always use the highest possible error reporting level.
 
@@ -883,38 +925,52 @@ C++ Style Guide
 
 **All rules from the C Style Guide applies here, with a few exceptions and additions described hereafter.**
 
-  1. [Comments](#cpp-1)
-  2. [Namespaces](#cpp-2)
-  3. [Classes](#cpp-3)
-     1. [Naming](#cpp-3-1)
-     2. [Inheritance](#cpp-3-2)
-     3. [Members](#cpp-3-3)
-     4. [Method definitions](#cpp-3-4)
-  4. [Templates](#cpp-4)
+  1. [Files and files extensions](#cpp-1)
+  2. [Comments](#cpp-2)
+  3. [Namespaces](#cpp-3)
+  4. [Classes](#cpp-4)
+     1. [Naming](#cpp-4-1)
+     2. [Inheritance](#cpp-4-2)
+     3. [Members](#cpp-4-3)
+     4. [Method definitions](#cpp-4-4)
+     5. [Destructors](#cpp-4-5)
+  5. [Templates](#cpp-5)
+  6. [Using](#cpp-6)
+  7. [Passing/Returning instances by value or reference](#cpp-7)
+  8. [Using C functions](#cpp-8)
 
-<a name="cpp-1"></a>
-### 1. Comments
+<a name="cpp-2"></a>
+### 1. Files and files extensions
+
+C++ source files should end with the `.cpp` extension.  
+C++ headers should end with the `.h` extension.
+
+Source and header files for classes should be named as the classes they declare/define.  
+Namespaces should be represented as directories.
+
+<a name="cpp-2"></a>
+### 2. Comments
 
 Single line C++ comments are allowed, even if the `/*  */` notation is usually preferred.
 
-<a name="cpp-2"></a>
-### 2. Namespaces
+<a name="cpp-3"></a>
+### 3. Namespaces
 
 Namespaces should always use the upper camel-case rule.
 
-<a name="cpp-3"></a>
-### 3. Classes
+<a name="cpp-4"></a>
+### 4. Classes
 
-<a name="cpp-3-1"></a>
-#### 3.1. Naming
+<a name="cpp-4-1"></a>
+#### 4.1. Naming
 
 C++ classes should always use the upper camel-case rule.  
 Methods should always use the lower camel-case rule, as well as properties.
 
 Private members should always have a leading underscore.
 
-<a name="cpp-3-2"></a>
-#### 3.2. Inheritance
+<a name="cpp-4-2"></a>
+#### 4.2. Inheritance
 
 The `:` sign should immediately follow the class name and should be followed by a single whitespace character.  
 When inheriting from multiple classes, a single whitespace character should be used after the comma:
@@ -926,8 +982,8 @@ class FooBar: Foo, Bar
 };
 ```
 
-<a name="cpp-3-3"></a>
-#### 3.3. Members
+<a name="cpp-4-3"></a>
+#### 4.3. Members
 
 Public members should be declared first, followed by protected and private members.  
 Always group members with the same visibility (properties and methods).  
@@ -958,13 +1014,18 @@ class Foo
 };
 ```
 
-<a name="cpp-3-4"></a>
-#### 3.4. Method definitions
+<a name="cpp-4-4"></a>
+#### 4.4. Method definitions
 
 Except for templates, method should never be defined in the header files.
 
-<a name="cpp-4"></a>
-### 4. Templates
+<a name="cpp-4-5"></a>
+#### 4.5. Destructors
+
+Destructors should always be virtual, unless there's a very good and specific reason not to do so.
+
+<a name="cpp-5"></a>
+### 5. Templates
 
 Template parameters should be surrounded by a single whitespace character.  
 A single whitespace character should be used after the comma.  
@@ -977,8 +1038,8 @@ template class Foo< int x, int y >
 };
 ```
 
-<a name="cpp-5"></a>
-### 5. Using
+<a name="cpp-6"></a>
+### 6. Using
 
 The `using` keyword is usually discouraged, except for very long namespaces.  
 It's strictly prohibited for the `std` namespace - the full notation should always be used.
@@ -995,9 +1056,31 @@ using std;
 vector< int > v;
 ```
 
-### 6. [ xxx ]
+<a name="cpp-7"></a>
+### 7. Passing/Returning instances by value or reference
 
-... [ in progress ] ...
+Passing instance arguments by value or reference is generally discouraged, unless there's specific reasons to do so.  
+Shared pointers or similar should always be preferred.
+
+An exception is made for STL classes, like `std::string`, `std::vector`, `std::map`, etc.
+
+<a name="cpp-8"></a>
+
+### 8. Using C functions
+
+The use of C functions is generally discouraged unless there's no C++ equivalent, or if there's a specific reason not to use a C++ equivalent.
+
+C library headers should not be used directly. Always use the C++ variants instead, when available:
+
+```C++
+#include <cstdio>
+```
+
+Not:
+
+```C++
+#include <stdio.h>
+```
 
 <a name="objc"></a>
 Objective-C Style Guide
@@ -1005,7 +1088,214 @@ Objective-C Style Guide
 
 **All rules from the C Style Guide applies here, with a few exceptions and additions described hereafter.**
 
-... [ in progress ] ...
+  1.  [Files](#objc-1)
+  2.  [Primitive datatypes](#objc-2)
+  3.  [Bracket notation](#objc-3)
+  4.  [Dot notation](#objc-4)
+  5.  [Literals](#objc-5)
+  6.  [Constants](#objc-6)
+  7.  [Enumerated types](#objc-7)
+  8.  [`NULL`, `nil` and `Nil`](#objc-8)
+  9.  [Blocks](#objc-9)
+  10. [Classes](#objc-10)
+  11. [Singletons/Shared instances](#objc-11)
+  12. [NSLog](#objc-12)
+  13. [Multithreading](#objc-13)
+  14. [Compilation](#objc-14)
+
+<a name="objc-1"></a>
+### 1. Files
+
+Source and header files for classes should be named as the classes they declare/define.  
+Directories should be used to separate logical groups of source files.
+
+For categories, the source and header files should be name as the class, followed by a `+` and the category name (`SomeClass+SomeCategory.m`).
+
+<a name="objc-2"></a>
+### 2. Primitive datatypes
+
+Unless there's a specific need to do so, never use the C primitive datatypes.  
+The Objective-C equivalent should always be preferred:
+
+  * `NSInteger` instead of `int` or `long`
+  * `NSUInteger` instead of `unsigned int` or `unsigned long`
+  * `CGFloat` instead of `float` or `double`
+
+Or use the types from `stdint.h` when needed.
+
+<a name="objc-3"></a>
+### 3. Bracket notation
+
+When sending messages, a single whitespace should be used before and after the brackets:
+
+```Objective-C
+a = [ [ NSArray alloc ] init ];
+```
+
+Not:
+
+```Objective-C
+a = [[NSArray alloc]init];
+```
+
+Long lines should be wrapped the following way:
+
+```Objective-C
+a = [ [ NSDictionary alloc ] initWithObjects: obj1,
+                                              obj2,
+                                              obj3,
+                                              nil
+                             forKeys:         @"key1",
+                                              @"key2",
+                                              @"key3",
+                                              nil
+    ];
+```
+
+The closing bracket is aligned with the opening one.  
+Parts of the method name are aligned to the left, as well as arguments.
+
+<a name="objc-4"></a>
+### 4. Dot notation
+
+The dot notation (to access properties) should not be mixed with the bracket notation:
+
+```Objective-C
+x = [ [ NSArray array ] count ];
+```
+
+Not:
+
+```Objective-C
+x = [ NSArray array ].count;
+```
+
+<a name="objc-5"></a>
+### 5. Literals
+
+The use of literals is generally encouraged, as well as subscripting:
+
+```Objective-C
+array      = @[ obj1, obj2 ];
+dictionary = @{ @"key1" : obj1, @"key2" : obj2 };
+number     = @42;
+```
+
+Instead of:
+
+```Objective-C
+array      = [ NSArray arrayWithObjects: obj1, obj2, nil ];
+dictionary = [ NSDictionary dictionaryWithObjectsAndKeys: obj1, @"key1", obj2, @"key2", nil ];
+number     = [ NSNumber numberWithInteger: 42 ];
+```
+
+Long declarations for array or dictionaries literals should be wrapped the following way:
+
+```Objective-C
+array      = @[
+                  obj1,
+                  obj2
+              ];
+dictionary = @{
+                  @"key1"   : obj1,
+                  @"key2"   : obj2,
+                  @"foobar" : obj2
+              };
+```
+
+The opening and closing brackets/braces are aligned.  
+Contained objects are placed on their own line, indented by four spaces.
+
+Fo dictionaries, the `:` signs are aligned.
+
+<a name="objc-6"></a>
+### 6. Constants
+
+The use of the `k` prefix for constants is prohibited.  
+When related to a class, constants should be prefixed by the class name.
+
+The name of constants should follow the upper camel-case rule.
+
+The use of the `extern` keyword is strictly prohibited for constants. Use the `FOUNDATION_EXPORT` macro instead:
+
+```Objective-C
+FOUNDATION_EXPORT NSString * const SomeClassConstantName;
+```
+
+Not
+
+```Objective-C
+extern NSString * const kConstantName;
+```
+
+<a name="objc-7"></a>
+### 7. Enumerated types
+
+The use of the `NSEnum` and `NSOptions` macros is strictly prohibited, as it may break compatibility.
+
+<a name="objc-8"></a>
+### 8. `NULL`, `nil` and `Nil`
+
+`NULL`, `nil` and `Nil` should not be used interchangeably.
+
+`nil` should always be used for instances, while `Nil`should be used for classes.  
+For any other pointer type, `NULL` should be used.
+
+<a name="objc-9"></a>
+### 9. Blocks
+
+The declaration of a block should follow the same rules as the declaration of a function pointer:
+
+```Objective-C
+NSUInteger ( ^ blockName )( NSUInteger x );
+```
+
+The `^` sign is surrounded by a single whitespace character.  
+For complex blocks, a typedef is recommended:
+
+```Objective-C
+typedef NSUInteger ( ^ blockTypeName )( NSUInteger x );
+```
+
+The definition of blocks should follow the function's definition style.  
+No whitespace should be placed after the `^` sign.  
+Block's code should be indented by four spaces.
+
+```Objective-C
+block = ^( void )
+{
+    /* ... */
+};
+```
+
+Blocks without arguments should always be defined as taking `void`.
+
+<a name="objc-10"></a>
+### 10. Classes
+
+<a name="objc-11"></a>
+### 11. Singletons/Shared instances
+
+Singletons or shared instances should always use a thread-safe pattern.  
+For pure singletons, it's required to ensure the `alloc` or `allocWithZone:` method can't be used to create a new instance.
+
+Methods related to manual memory management (`retain`, `release`, `autorelease`, `retainCount` etc.) should be overridden appropriately.
+
+<a name="objc-12"></a>
+### 12. NSLog
+
+`NSLog` should be used carefully.  
+It's recommended to use a macro to disable logging for release builds.
+
+<a name="objc-13"></a>
+### 13. Multithreading
+
+The use of `libdispatch` should always be preferred to standard `NSThread` approach, unless there's a specific reason to use `NSThread`, like ensuring the thread is detached immediately.
+
+<a name="objc-14"></a>
+### 14. Compilation
+
+GCC should never be used to compile Objective-C. Use Clang/LLVM instead.
 
 <a name="asm"></a>
 x86 Assembly Style Guide
