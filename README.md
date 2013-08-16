@@ -1022,7 +1022,7 @@ Except for templates, method should never be defined in the header files.
 <a name="cpp-4-5"></a>
 #### 4.5. Destructors
 
-Destructors should always be virtual, unless there's a very good and specific reason not to do so.
+Destructors should always be declared as `virtual`, unless there's a very good and specific reason not to do so.
 
 <a name="cpp-5"></a>
 ### 5. Templates
