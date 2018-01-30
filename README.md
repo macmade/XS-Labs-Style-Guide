@@ -33,7 +33,7 @@ XS-Labs' coding conventions make a heavy use of whitespaces.
 It's not a common habit among coders, who usually prefers compact code.
 
 This is just a personal taste.  
-After 15 years of professional development, I like to see a lot of spaces in my own code. It's like letting the code breath.   
+After years of professional development, I like to see a lot of spaces in my own code. It's like letting the code breath.   
 Code is about rhythm, and readability. And I think taking time to carefully align operators, declarations, etc. improves the overall readability and the feeling you can get while reading code.
 
 <a name="license"></a>
@@ -117,7 +117,7 @@ Source and header files should always end with a single empty line.
 <a name="c-3"></a>
 ### 3. Comments
 
-Comments should always use the `/* */` notations.  
+Comments should always use the `/* */` notation.  
 Single line C++ style comments (`//`) are strictly prohibited.
 
 A line of comment should whenever possible be no more that 80 columns.
@@ -450,29 +450,15 @@ Local variables should never start with an underscore, and should always start w
 Lower camel-case is recommended.
 
 For global symbols (variables and functions), upper camel-case is usually recommended.  
-A single underscore may be used to denote private symbols, if they are not static.  
 Underscores may be used to simulate namespaces.
 
 ```C
 void SomePackage_SomePublicFunction( void );
-void _SomePackage_SomePrivateFunction( void );
 
 extern int SomeInteger;
 ```
 
-Static symbols should always start with two underscores, and have a value:
-
-```C
-static int __x = 0;
-```
-
-Not:
-
-```C
-static int x;
-```
-
-This also applies to static functions.
+Symbols shall never start with two underscores, or with an underscore followed by an uppercase letter.
 
 <a name="c-10"></a>
 ### 10. Variable declaration
@@ -564,23 +550,23 @@ union bar
 };
 ```
 
-When manually padding a struct, use two leading underscore for the member name, and a trailing number, prefaced with an underscore.  
+When manually padding a struct, use a leading underscore for the member name, and a trailing number, prefixed with a single underscore.  
 Always use a `char` array to manually pad a structure:
 
 ```C
 struct foo
 {
 	char s;
-	char __pad_0[ 3 ];
+	char _pad_0[ 3 ];
 	int  x;
 };
 ```
 
 <a name="c-13"></a>
-### 13. Enumrated types
+### 13. Enumerated types
 
 Enum values should be properly aligned, as mentioned before.  
-A value should always be provided. Hexadecimal is usually preferred:
+Explicit values are preferred, as well as hexadecimal notation:
 
 ```C
 enum
@@ -675,18 +661,18 @@ y = 2;
 All headers should be properly guarded:
 
 ```C
-#ifndef __FOO_H__
-#define __FOO_H__
+#ifndef FOO_H
+#define FOO_H
 
 /* ... */
 
-#endif
+#endif /* FOO_H */
 ```
 
-The name of the macro used as header guard should always be in uppercase, start and end with two underscores.  
+The name of the macro used as header guard should always be in uppercase.  
 It should consist of the name of the header file (optionally with directories prefixes, separated by a single underscore), and a trailing `_H`.
 
-For instance, for `include/foo/bar/foobar.h`, this should be `__FOO_BAR_FOOBAR_H__`.
+For instance, for `include/foo/bar/foobar.h`, this should be `FOO_BAR_FOOBAR_H`.
 
 <a name="c-17"></a>
 ### 17. Functions prototypes
@@ -934,26 +920,29 @@ C++ Style Guide
 
 **All rules from the C Style Guide applies here, with a few exceptions and additions described hereafter.**
 
-  1. [Files and files extensions](#cpp-1)
-  2. [Comments](#cpp-2)
-  3. [Namespaces](#cpp-3)
-  4. [Classes](#cpp-4)
+  1.  [Files and files extensions](#cpp-1)
+  2.  [Comments](#cpp-2)
+  3.  [Namespaces](#cpp-3)
+  4.  [Classes](#cpp-4)
      1. [Naming](#cpp-4-1)
      2. [Inheritance](#cpp-4-2)
      3. [Members](#cpp-4-3)
      4. [Method definitions](#cpp-4-4)
      5. [Destructors](#cpp-4-5)
-  5. [Templates](#cpp-5)
-  6. [Using](#cpp-6)
-  7. [Passing/Returning instances by value or reference](#cpp-7)
-  8. [Includes and forward declarations](#cpp-8)
-  9. [Using C functions](#cpp-9)
+  5.  [Templates](#cpp-5)
+  6.  [Using](#cpp-6)
+  7.  [Variable declaration](#cpp-7)
+  8.  [Function/method arguments](#cpp-8)
+  9.  [Lambdas](#cpp-9)
+  10. [Enumerated types](#cpp-10)
+  11. [Includes and forward declarations](#cpp-11)
+  12. [Using C functions](#cpp-12)
 
 <a name="cpp-2"></a>
 ### 1. Files and files extensions
 
 C++ source files should end with the `.cpp` extension.  
-C++ headers should end with the `.h` extension.
+C++ headers should end with the `.hpp` extension.
 
 Source and header files for classes should be named as the classes they declare/define.  
 Namespaces should be represented as directories.
@@ -961,7 +950,7 @@ Namespaces should be represented as directories.
 <a name="cpp-2"></a>
 ### 2. Comments
 
-Single line C++ comments are allowed, even if the `/*  */` notation is usually preferred.
+Single line C++ comments are allowed, even if the `/*  */` notation is usually preferred, especially when the comment consists of multiple lines.
 
 <a name="cpp-3"></a>
 ### 3. Namespaces
@@ -975,7 +964,8 @@ Namespaces should always follow the upper camel-case rule.
 #### 4.1. Naming
 
 C++ classes should always follow the upper camel-case rule.  
-Methods should always follow the lower camel-case rule, as well as properties.
+Properties should always follow the lower camel-case rule.  
+Methods should follow either the upper camel-case rule or the lower camel-case rule, but mixing both in the same project is not allowed.
 
 Private members should always have a leading underscore.
 
@@ -996,7 +986,7 @@ class FooBar: Foo, Bar
 #### 4.3. Members
 
 Public members should be declared first, followed by protected and private members.  
-Always group members with the same visibility (properties and methods).  
+Always group members with the same visibility (properties and methods), unless it is not possible.  
 
 Static members should also be declared first, inside the visibility group, followed by methods and properties.  
 Separate static methods, methods and properties by an empty line.
@@ -1051,7 +1041,7 @@ template class Foo< int x, int y >
 <a name="cpp-6"></a>
 ### 6. Using
 
-The `using` keyword is usually discouraged, except for very long namespaces.  
+The `using` keyword is usually discouraged for namespaces, except for very long namespaces.  
 It's strictly prohibited for the `std` namespace - the full notation should always be used.
 
 ```C++
@@ -1067,16 +1057,131 @@ vector< int > v;
 ```
 
 <a name="cpp-7"></a>
-### 7. Passing/Returning instances by value or reference
+### 7. Variable declaration
 
-Passing instance arguments by value or reference is generally discouraged, unless there's specific reasons to do so.  
-Shared pointers or similar should always be preferred.
+Variables may be declared with a value.  
+In such a case, parenthesis should be preferred over the equal sign.  
 
-An exception is made for STL classes, like `std::string`, `std::vector`, `std::map`, etc.
+```C++
+int x( 0 );
+```
+
+Over:
+
+```C++
+int x = 0;
+```
+
+Using braces is also allowed.  
+In such a case, always add a leading space before the opening brace:
+
+```C++
+int x {};
+int y { 42 };
+```
+
+Not:
+
+```C++
+int x{};
+int y{ 42 };
+```
 
 <a name="cpp-8"></a>
+### 8. Function/method arguments
 
-### 8. Includes and forward declarations
+Except for out parameters, primitive or integral types should always be passed by value.  
+For other types, passing `const` references is preferred:
+
+```C++
+void foo( int value );
+void bar( const std::string & value );
+```
+
+Over:
+
+```C++
+void foo( const int & value );
+void bar( std::string value );
+```
+
+<a name="cpp-9"></a>
+### 9. Lambdas
+
+When using lambdas, a single space should be placed before and after any capture.  
+A single space should be placed after the comma in the capture list.  
+When there is no capture, no space should be placed inside the brackets:
+
+```C++
+auto a = []( void )            {};
+auto b = [ & ]( void )         {};
+auto c = [ this ]( void )      {};
+auto c = [ this, foo ]( void ) {};
+```
+
+Not:
+
+```C++
+auto a = [ ]( void )        {};
+auto b = [&]( void )        {};
+auto c = [this]( void )     {};
+auto c = [this,foo]( void ) {};
+```
+
+No space should be placed between the capture brackets and the opening parenthesis for arguments.  
+When the lambda doesn't take arguments, always use `( void )`, as for functions:
+
+```C++
+auto a = []( int x ) {};
+auto b = []( void )  {};
+```
+
+Not:
+
+```C++
+auto a = [](int x) {};
+auto b = []        {};
+```
+
+The return type may be omitted.  
+If specified, a leading and trailing space should be placed around `->`:
+
+
+```C++
+auto a = []( void ) -> int {};
+```
+
+Not:
+
+```C++
+auto a = []( void )->int {};
+```
+
+<a name="cpp-10"></a>
+### 10. Enumerated types
+
+Scoped enumerations should always be preferred over unscoped enumerations:
+
+```C++
+enum class Foo
+{
+	X
+	Y
+};
+```
+
+Over:
+
+```C++
+enum Foo
+{
+	FooX
+	FooY
+};
+```
+
+<a name="cpp-11"></a>
+### 11. Includes and forward declarations
 
 The number of included files contained in the headers should be limited.  
 Always use forward declarations when possible:
@@ -1105,9 +1210,8 @@ class Bar
 };
 ```
 
-<a name="cpp-9"></a>
-
-### 9. Using C functions
+<a name="cpp-12"></a>
+### 12. Using C functions
 
 The use of C functions is generally discouraged unless there's no C++ equivalent, or if there's a specific reason not to use a C++ equivalent.
 
@@ -1132,27 +1236,26 @@ Objective-C Style Guide
   1.  [Files](#objc-1)
   2.  [Primitive datatypes](#objc-2)
   3.  [Bracket notation](#objc-3)
-  4.  [Dot notation](#objc-4)
-  5.  [Literals](#objc-5)
-  6.  [Constants](#objc-6)
-  7.  [Enumerated types](#objc-7)
-  8.  [`NULL`, `nil` and `Nil`](#objc-8)
-  9.  [Blocks](#objc-9)
-  10. [Classes](#objc-10)
-      1.  [Naming](#objc-10-1)
-      2.  [Interface declaration](#objc-10-2)
-      3.  [Instance variables](#objc-10-3)
-      4.  [Properties](#objc-10-4)
-      5.  [Properties atomicity](#objc-10-5)
-      6.  [Methods](#objc-10-6)
-      7.  [Imports and forward declarations](#objc-10-7)
-      8.  [Private methods](#objc-10-8)
-      9.  [Categories](#objc-10-9)
-      10. [Protocols](#objc-10-10)
-  11. [Singletons/Shared instances](#objc-11)
-  12. [NSLog](#objc-12)
-  13. [Multithreading](#objc-13)
-  14. [Compilation](#objc-14)
+  4.  [Literals](#objc-4)
+  5.  [Constants](#objc-5)
+  6.  [Enumerated types](#objc-6)
+  7.  [`NULL`, `nil` and `Nil`](#objc-7)
+  8.  [Blocks](#objc-8)
+  9.  [Classes](#objc-9)
+      1.  [Naming](#objc-9-1)
+      2.  [Interface declaration](#objc-9-2)
+      3.  [Instance variables](#objc-9-3)
+      4.  [Properties](#objc-9-4)
+      5.  [Properties atomicity](#objc-9-5)
+      6.  [Methods](#objc-9-6)
+      7.  [Imports and forward declarations](#objc-9-7)
+      8.  [Private methods](#objc-9-8)
+      9.  [Categories](#objc-9-9)
+      10. [Protocols](#objc-9-10)
+  10. [Singletons/Shared instances](#objc-10)
+  11. [NSLog](#objc-11)
+  12. [Multithreading](#objc-12)
+  13. [Compilation](#objc-13)
 
 <a name="objc-1"></a>
 ### 1. Files
@@ -1205,21 +1308,6 @@ a = [ [ NSDictionary alloc ] initWithObjects: obj1,
 
 The closing bracket is aligned with the opening one.  
 Parts of the method name are aligned to the left, as well as arguments.
-
-<a name="objc-4"></a>
-### 4. Dot notation
-
-The dot notation (to access properties) should not be mixed with the bracket notation:
-
-```Objective-C
-x = [ [ NSArray array ] count ];
-```
-
-Not:
-
-```Objective-C
-x = [ NSArray array ].count;
-```
 
 <a name="objc-5"></a>
 ### 5. Literals
@@ -1282,7 +1370,7 @@ extern NSString * const kConstantName;
 <a name="objc-7"></a>
 ### 7. Enumerated types
 
-The use of the `NSEnum` and `NSOptions` macros is strictly prohibited, as it may break compatibility.
+The use of the `NSEnum` and `NSOptions` macros is encouraged, while not mandatory.
 
 <a name="objc-8"></a>
 ### 8. `NULL`, `nil` and `Nil`
@@ -1321,37 +1409,33 @@ block = ^( void )
 
 Blocks without arguments should always be defined as taking `void`.
 
-<a name="objc-10"></a>
-### 10. Classes
+<a name="objc-9"></a>
+### 9. Classes
 
-  1.  [Naming](#objc-10-1)
-  2.  [Interface declaration](#objc-10-2)
-  3.  [Instance variables](#objc-10-3)
-  4.  [Properties](#objc-10-4)
-  5.  [Properties atomicity](#objc-10-5)
-  6.  [Methods](#objc-10-6)
-  7.  [Imports and forward declarations](#objc-10-7)
-  8.  [Private methods](#objc-10-8)
-  9.  [Categories](#objc-10-9)
-  10. [Protocols](#objc-10-10)
+  1.  [Naming](#objc-9-1)
+  2.  [Interface declaration](#objc-9-2)
+  3.  [Instance variables](#objc-9-3)
+  4.  [Properties](#objc-9-4)
+  5.  [Properties atomicity](#objc-9-5)
+  6.  [Methods](#objc-9-6)
+  7.  [Imports and forward declarations](#objc-9-7)
+  8.  [Private methods](#objc-9-8)
+  9.  [Categories](#objc-9-9)
+  10. [Protocols](#objc-9-10)
 
-<a name="objc-10-1"></a>
-#### 10.1. Naming
+<a name="objc-9-1"></a>
+#### 9.1. Naming
 
 The name of classes should follow the upper camel-case rule.
 
-<a name="objc-10-2"></a>
-#### 10.2. Interface declaration
+<a name="objc-9-2"></a>
+#### 9.2. Interface declaration
 
 The interface declaration should follow the following rules:
 
-The `@public`, `@protected` and `@private` keywords should always be present (even if there's no ivar with such a visibility), and should not be indented.  
-An empty line should be placed directly after.
+Instance variabes are prohibited in the interface (see [9.3. Instance variables](#objc-9-3)).
 
-Public ivars should come first, followed by protected and private ivars.  
-All ivars should be indented by four spaces.
-
-Properties and methods should be indented by four spaces.  
+Properties and methods should not be indented.  
 Properties should come first, followed by methods.
 
 The `:` sign after the class name should have a trailing whitespace character, but never a leading one.
@@ -1364,59 +1448,49 @@ Example:
 
 ```Objective-C
 @interface Foobar: NSObject < Foo, Bar >
-{
-@public
-    
-    /* Public ivars */
-    
-@protected
-    
-    /* Protected ivars */
-    
-@private
-    
-    /* Private ivars */
-}
 
-/* Properties */
+@property( atomic, readonly ) NSInteger x;
 
-/* Methods */
+- ( void )foo;
 
 @end
 ```
 
-<a name="objc-10-3"></a>
-#### 10.3. Instance variables
+<a name="objc-9-3"></a>
+#### 9.3. Instance variables
 
-Instance variables should follow the lower camel-case rule.
+Instance variables should follow the lower camel-case rule and start with a single leading underscore.
 
-Instance variables should never be public.  
+Using instance variables should be avoided avoided whenever possible.  
 Use properties instead.
 
-Private instance variables should start with a single leading underscore.
+Instance variables are not allowed in the public interface.  
+Use a private class extension in the implementation instead.
 
 Except when using headerdoc comments, the name of the instance variables should be aligned, as mentioned in the alignment topic of the C style guide:
 
 ```Objective-C
-@private
-    
+@interface Foo()
+{
     NSUInteger     _x;
     NSArray      * _array;
     NSDictionary * _dict;
+}
 ```
 
 Not:
 
 ```Objective-C
-@private
-    
+@interface Foo()
+{    
     NSUInteger _x;
     NSArray * _array;
     NSDictionary * _dict;
+}
 ```
 
-<a name="objc-10-4"></a>
-#### 10.4. Properties
+<a name="objc-9-4"></a>
+#### 9.4. Properties
 
 Properties variables should follow the lower camel-case rule.
 
@@ -1432,15 +1506,15 @@ Not:
 @property( assign ) NSUInteger x;
 ```
 
-<a name="objc-10-5"></a>
-#### 10.5. Properties atomicity
+<a name="objc-9-5"></a>
+#### 9.5. Properties atomicity
 
 Properties should generally be declared as `atomic`, unless there's a specific reason not to do so.
 
 An exception is made for `IBOutlet` properties, which should always be `nonatomic`.
 
-<a name="objc-10-6"></a>
-#### 10.6. Methods
+<a name="objc-9-6"></a>
+#### 9.6. Methods
 
 Methods should follow the lower camel-case rule.  
 The use of a leading underscore is strictly prohibited.
@@ -1475,8 +1549,8 @@ Not:
 ( id )anObject
 ```
 
-<a name="objc-10-7"></a>
-#### 10.7. Imports and forward declarations
+<a name="objc-9-7"></a>
+#### 9.7. Imports and forward declarations
 
 The number of included files contained in the headers should be limited.  
 Always use forward declarations when possible:
@@ -1485,7 +1559,6 @@ Always use forward declarations when possible:
 @class Foo;
 
 @interface Bar
-{}
 
 - ( id )initWithFoo: ( Foo * )foo;
 
@@ -1495,48 +1568,40 @@ Always use forward declarations when possible:
 Not:
 
 ```Objective-C
-#import "Foo.h";
+#import "Foo.h"
 
 @interface Bar
-{}
 
 - ( id )initWithFoo: ( Foo * )foo;
 
 @end
 ```
 
-<a name="objc-10-8"></a>
-#### 10.8. Private methods
+<a name="objc-9-8"></a>
+#### 9.8. Private methods
 
-Private methods should be declared and defined in a category named `Private`, within a specific category header and source file file containing only the private methods.  
-
-The use of an informal protocol in the main implementation is strictly prohibited:
-
-```Objective-C
-#import "Foo.h";
-#import "Foo+Private.h";
-
-@implementation Foo
-
-@end
-```
-
-Not:
+Private methods should be declared and defined in a class extension, in the main implementation.  
+Declaration may be avoided, but is usually preferred:
 
 ```Objective-C
-#import "Foo.h";
+#import "Foo.h"
 
 @interface Foo()
 
+- ( void )bar;
+
 @end
 
-@implementation Foo
+@implementation Foo()
+
+- ( void )bar
+{}
 
 @end
 ```
 
-<a name="objc-10-9"></a>
-#### 10.9. Categories
+<a name="objc-9-9"></a>
+#### 9.9. Categories
 
 Each category should have its own header and source file.  
 
@@ -1552,10 +1617,9 @@ Not:
 @interface Foo (CategoryName)
 ```
 
-<a name="objc-10-10"></a>
-#### 10.10. Protocols
-
-Each protocol should be implemented in a specific category, named as the protocol, within a specific header and source file.  
+<a name="objc-9-10"></a>
+#### 9.10. Protocols
+ 
 If the protocol conformance is not intended to be public, the main interface file should not declare it.
 
 For instance, a `Foo` class implementing `NSTableViewDelegate` (for internal use).
@@ -1564,55 +1628,65 @@ For instance, a `Foo` class implementing `NSTableViewDelegate` (for internal use
 
 ```Objective-C
 @interface Foo: NSObject
-{}
 
 @end
 ```
 
-`Foo+NSTableViewDelegate.h`:
+`Foo.m`:
 
 ```Objective-C
 #import "Foo.h"
 
-@interface Foo( NSTableViewDelegate ) < NSTableViewDelegate >
-{}
+@interface Foo() < NSTableViewDelegate >
 
 @end
 ```
 
-`Foo+NSTableViewDelegate.m`:
+<a name="objc-10"></a>
+### 10. Singletons/Shared instances
+
+Singletons or shared instances should always be created with the `dispatch_once` pattern.  
+For pure singletons, `allocWithZone:` should be overriden to return the shared instance:
 
 ```Objective-C
-#import "Foo+NSTableViewDelegate.h"
++ ( instancetype )sharedInstance
+{
+    static dispatch_once_t once;
+    static id              instance = nil;
+    
+    dispatch_once
+    (
+        &once,
+        ^( void )
+        {
+            instance = [ [ super allocWithZone: nil ] init ];
+        }
+    );
+    
+    return instance;
+}
 
-@implementation Foo( NSTableViewDelegate )
-
-/* ... */
-
-@end
++ ( id )allocWithZone: ( NSZone * )zone
+{
+    ( void )zone;
+    
+    return [ self sharedInstance ];
+}
 ```
 
 <a name="objc-11"></a>
-### 11. Singletons/Shared instances
-
-Singletons or shared instances should always use a thread-safe pattern.  
-For pure singletons, it's required to ensure the `alloc` or `allocWithZone:` method can't be used to create a new instance.
-
-Methods related to manual memory management (`retain`, `release`, `autorelease`, `retainCount` etc.) should be overridden appropriately.
-
-<a name="objc-12"></a>
-### 12. NSLog
+### 11. NSLog
 
 `NSLog` should be used carefully.  
 It's recommended to use a macro to disable logging for release builds.
 
-<a name="objc-13"></a>
-### 13. Multithreading
+<a name="objc-12"></a>
+### 12. Multithreading
 
 The use of `libdispatch` should always be preferred to standard `NSThread` approach, unless there's a specific reason to use `NSThread`, like ensuring the thread is detached immediately.
 
-<a name="objc-14"></a>
-### 14. Compilation
+<a name="objc-13"></a>
+### 13. Compilation
 
 GCC should never be used to compile Objective-C. Use Clang/LLVM instead.
 
@@ -2004,10 +2078,10 @@ Instead of:
 Repository Infos
 ----------------
 
-    Owner:			Jean-David Gadina - XS-Labs
-    Web:			www.xs-labs.com
-    Blog:			www.noxeos.com
-    Twitter:		@macmade
-    GitHub:			github.com/macmade
-    LinkedIn:		ch.linkedin.com/in/macmade/
-    StackOverflow:	stackoverflow.com/users/182676/macmade
+    Owner:          Jean-David Gadina - XS-Labs
+    Web:            www.xs-labs.com
+    Blog:           www.noxeos.com
+    Twitter:        @macmade
+    GitHub:         github.com/macmade
+    LinkedIn:       ch.linkedin.com/in/macmade/
+    StackOverflow:  stackoverflow.com/users/182676/macmade
