@@ -640,7 +640,7 @@ enum
 Simple typedefs are declared on a single line:
 
 ```C
-typedef int foo;
+typedef int Foo;
 ```
 
 With structures, unions and enumrated types place the type name on a new line:
@@ -651,7 +651,7 @@ typedef struct
     int x;
     int y;
 }
-foo;
+Foo;
 ```
 
 For enumrated types, each value should be prefixed by the type name:
