@@ -1085,14 +1085,14 @@ vector< int > v;
 <a name="cpp-7"></a>
 ### 7. Variable declaration
 
-Variables may be declared with a value.  
-In such a case, parenthesis should be preferred over the equal sign.  
+Always declare variables with a value.  
+Use either parenthesis or the equal sign.  
 
 ```C++
 int x( 0 );
 ```
 
-Over:
+Or:
 
 ```C++
 int x = 0;
@@ -1112,6 +1112,18 @@ Not:
 int x{};
 int y{ 42 };
 ```
+
+Variables declarations and statement may be mixed in C++.  
+In such a case, always separate variables declarations and statements with an empty line:
+
+```C++
+int x = 0;
+
+Foo::Bar();
+
+std::string s = "hello, world";
+```
+
 
 <a name="cpp-8"></a>
 ### 8. Function/method arguments
@@ -1191,8 +1203,8 @@ Scoped enumerations should always be preferred over unscoped enumerations:
 ```C++
 enum class Foo
 {
-	X
-	Y
+    X
+    Y
 };
 ```
 
@@ -1201,8 +1213,8 @@ Over:
 ```C++
 enum Foo
 {
-	FooX
-	FooY
+    FooX
+    FooY
 };
 ```
 
