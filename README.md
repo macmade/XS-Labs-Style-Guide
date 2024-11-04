@@ -1,5 +1,5 @@
-XS-Labs Coding Style Guide for C, C++, Objective-C and x86 Assembly
-===================================================================
+XS-Labs Coding Style Guide
+==========================
 
 [![Issues](http://img.shields.io/github/issues/macmade/XS-Labs-Style-Guide.svg?logo=github)](https://github.com/macmade/XS-Labs-Style-Guide/issues)
 ![Status](https://img.shields.io/badge/status-active-brightgreen.svg?logo=git)
