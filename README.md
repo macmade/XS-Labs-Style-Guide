@@ -11,11 +11,12 @@ Table Of Contents
 -----------------
 
  1. [About](#about)
- 1. [License](#license)
- 1. [C Style Guide](#c)
- 1. [C++ Style Guide](#cpp)
- 1. [Objective-C Style Guide](#objc)
- 1. [x86 Assembly Style Guide](#asm)
+ 2. [License](#license)
+ 3. [Git Commit Style Guide](#git)
+ 4. [C Style Guide](#c)
+ 5. [C++ Style Guide](#cpp)
+ 6. [Objective-C Style Guide](#objc)
+ 7. [x86 Assembly Style Guide](#asm)
 
 <a name="about"></a>
 About
@@ -38,6 +39,25 @@ License
 -------
 
 This style guide is published under the terms of the [FreeBSD documentation license](http://www.freebsd.org/copyright/freebsd-doc-license.html).
+
+<a name="git"></a>
+Git Commit Style Guide
+----------------------
+
+Always follow the Conventional Commits specification for Git commit messages:  
+https://www.conventionalcommits.org/en/v1.0.0/
+
+Allowed commit types are:
+
+ - `fix`
+ - `feat`
+ - `chore`
+ - `style`
+ - `refactor`
+ - `build`
+ - `test`
+ - `ci`
+ - `revert`
 
 <a name="c"></a>
 C Style Guide
