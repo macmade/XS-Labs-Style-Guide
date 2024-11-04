@@ -15,8 +15,10 @@ Table Of Contents
  3. [Git Commit Style Guide](#git)
  4. [C Style Guide](#c)
  5. [C++ Style Guide](#cpp)
- 6. [Objective-C Style Guide](#objc)
- 7. [x86 Assembly Style Guide](#asm)
+ 6. [Swift Style Guide](#swift)
+ 7. [C# Style Guide](#csharp)
+ 8. [Objective-C Style Guide](#objc)
+ 9. [x86 Assembly Style Guide](#asm)
 
 <a name="about"></a>
 About
@@ -1264,6 +1266,18 @@ Not:
 ```C++
 #include <stdio.h>
 ```
+
+<a name="swift"></a>
+Swift Style Guide
+-----------------
+
+... Work in progress ...
+
+<a name="csharp"></a>
+C# Style Guide
+--------------
+
+... Work in progress ...
 
 <a name="objc"></a>
 Objective-C Style Guide
