@@ -604,9 +604,9 @@ If using explicit values, hexadecimal notation is preferred:
 ```C
 enum
 {
-	Foo    = 0x01,
-	Bar    = 0x02,
-	Foobar = 0x10
+    Foo    = 0x01,
+    Bar    = 0x02,
+    Foobar = 0x10
 };
 ```
 
@@ -615,9 +615,9 @@ Not:
 ```C
 enum
 {
-	Foo,
-	Bar,
-	Foobar = 0x10
+    Foo,
+    Bar,
+    Foobar = 0x10
 };
 ```
 
@@ -627,9 +627,9 @@ When using flags, the left shift operator is recommended:
 ```C
 enum
 {
-	Foo    = 1 << 0,
-	Bar    = 1 << 1,
-	Foobar = 1 << 2
+    Foo    = 1 << 0,
+    Bar    = 1 << 1,
+    Foobar = 1 << 2
 };
 ```
 
