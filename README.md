@@ -961,10 +961,11 @@ C++ Style Guide
   6.  [Using](#cpp-6)
   7.  [Variable declaration](#cpp-7)
   8.  [Function/method arguments](#cpp-8)
-  9.  [Lambdas](#cpp-9)
-  10. [Enumerated types](#cpp-10)
-  11. [Includes and forward declarations](#cpp-11)
-  12. [Using C functions](#cpp-12)
+  9.  [Functions with no parameters](#cpp-9)
+  10. [Lambdas](#cpp-10)
+  11. [Enumerated types](#cpp-11)
+  12. [Includes and forward declarations](#cpp-12)
+  13. [Using C functions](#cpp-13)
 
 <a name="cpp-1"></a>
 ### 1. Files and files extensions
@@ -1027,16 +1028,16 @@ class Foo
 {
     public:
         
-        static void staticMethod( void );
+        static void staticMethod();
         
-        Foo( void );
+        Foo();
         
         int           x;
         unsigned long y;
         
     private:
         
-        void _bar( void );
+        void _bar();
         
         int _z;
 };
@@ -1146,59 +1147,66 @@ void bar( std::string value );
 ```
 
 <a name="cpp-9"></a>
-### 9. Lambdas
+### 9. Functions with no parameters
+
+Unlike C conventions, empty parenthesis are fine and preferred for functions or methods without parameters:
+
+```C++
+    void foo();
+```
+
+<a name="cpp-10"></a>
+### 10. Lambdas
 
 When using lambdas, a single space should be placed before and after any capture.  
 A single space should be placed after the comma in the capture list.  
 When there is no capture, no space should be placed inside the brackets:
 
 ```C++
-auto a = []( void )            {};
-auto b = [ & ]( void )         {};
-auto c = [ this ]( void )      {};
-auto c = [ this, foo ]( void ) {};
+auto a = []()            {};
+auto b = [ & ]()         {};
+auto c = [ this ]()      {};
+auto c = [ this, foo ]() {};
 ```
 
 Not:
 
 ```C++
-auto a = [ ]( void )        {};
-auto b = [&]( void )        {};
-auto c = [this]( void )     {};
-auto c = [this,foo]( void ) {};
+auto a = [ ]()        {};
+auto b = [&]()        {};
+auto c = [this]()     {};
+auto c = [this,foo]() {};
 ```
 
-No space should be placed between the capture brackets and the opening parenthesis for arguments.  
-When the lambda doesn't take arguments, always use `( void )`, as for functions:
+No space should be placed between the capture brackets and the opening parenthesis for arguments.
 
 ```C++
 auto a = []( int x ) {};
-auto b = []( void )  {};
+auto b = []()        {};
 ```
 
 Not:
 
 ```C++
-auto a = [](int x) {};
-auto b = []        {};
+auto a = [] (int x) {};
+auto b = []         {};
 ```
 
 The return type may be omitted.  
 If specified, a leading and trailing space should be placed around `->`:
 
-
 ```C++
-auto a = []( void ) -> int {};
+auto a = []() -> int {};
 ```
 
 Not:
 
 ```C++
-auto a = []( void )->int {};
+auto a = []()->int {};
 ```
 
-<a name="cpp-10"></a>
-### 10. Enumerated types
+<a name="cpp-11"></a>
+### 11. Enumerated types
 
 Scoped enumerations should always be preferred over unscoped enumerations:
 
@@ -1220,8 +1228,8 @@ enum Foo
 };
 ```
 
-<a name="cpp-11"></a>
-### 11. Includes and forward declarations
+<a name="cpp-12"></a>
+### 12. Includes and forward declarations
 
 The number of included files contained in the headers should be limited.  
 Always use forward declarations when possible:
@@ -1250,8 +1258,8 @@ class Bar
 };
 ```
 
-<a name="cpp-12"></a>
-### 12. Using C functions
+<a name="cpp-13"></a>
+### 13. Using C functions
 
 The use of C functions is generally discouraged unless there's no C++ equivalent, or if there's a specific reason not to use a C++ equivalent.
 
