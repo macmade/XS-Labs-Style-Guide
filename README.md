@@ -269,7 +269,7 @@ When using `for` loops, a single whitespace character should be used after the s
 ```C
 for( i = 0; i < 10; i++ )
 {
-	/* ... */
+    /* ... */
 }
 ```
 
@@ -278,7 +278,7 @@ Not:
 ```C
 for( i = 0;i < 10;i++ )
 {
-	/* ... */
+    /* ... */
 }
 ```
 
@@ -412,7 +412,7 @@ If using single line conditional statements (see above), align the `if`/`else` s
 ```C
      if( x      == 1 ) { foobar = 1;          }
 else if( foobar == 1 ) { x      = 0xFFFFFFFF; }
-else				   { x      = 0;          }
+else                   { x      = 0;          }
 ```
 
 Not:
@@ -460,16 +460,13 @@ Symbols shall never start with two underscores, or with an underscore followed b
 <a name="c-10"></a>
 ### 10. Variable declaration
 
-Local variables should be declared without a value, and before any other statement:
+Local variables should be declared before any other statement:
 
 ```C
 void foo( void )
 {
-    int x;
-    int y;
-    
-    x = 0;
-    x = 1;
+    int x = 0;
+    int y = 1;
     
     foo();
     foobar();
@@ -491,12 +488,27 @@ void foo( void )
 }
 ```
 
-The same applies for `for` loops:
+If you need to delcare variables after a statement, always use a dedicated scope:
 
 ```C
-int i;
+void foo( void )
+{
+    int x = 0;
+    
+    foo();
 
-for( i = 0; i < 10; i++ )
+    {
+        int y = 1;
+        
+        foobar();
+    }
+}
+```
+
+The rules above do not apply to `for` loops, where a variable delcaration is permitted and recommended:
+
+```C
+for( int i = 0; i < 10; i++ )
 {
     /* ... */
 }
@@ -505,7 +517,9 @@ for( i = 0; i < 10; i++ )
 Not:
 
 ```C
-for( int i = 0; i < 10; i++ )
+int i;
+
+for( i = 0; i < 10; i++ )
 {
     /* ... */
 }
@@ -563,7 +577,7 @@ struct foo
 ### 13. Enumerated types
 
 Enum values should be properly aligned, as mentioned before.  
-Explicit values are preferred, as well as hexadecimal notation:
+If using explicit values, hexadecimal notation is preferred:
 
 ```C
 enum
@@ -584,6 +598,19 @@ enum
 	Foobar = 0x10
 };
 ```
+
+When using flags, the left shift operator is recommended:
+
+
+```C
+enum
+{
+	Foo    = 1 << 0,
+	Bar    = 1 << 1,
+	Foobar = 1 << 2
+};
+```
+
 
 <a name="c-14"></a>
 ### 14. Typedefs
@@ -766,24 +793,6 @@ if( x == 0 )
 else
 {
 	return false;
-}
-```
-
-Always prefer testing with `==`, even with boolean values:
-
-```C
-if( b == true )
-{
-    /* ... */
-}
-```
-
-Not:
-
-```C
-if( b )
-{
-    /* ... */
 }
 ```
 
