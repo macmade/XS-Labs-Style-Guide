@@ -966,7 +966,7 @@ C++ Style Guide
   11. [Includes and forward declarations](#cpp-11)
   12. [Using C functions](#cpp-12)
 
-<a name="cpp-2"></a>
+<a name="cpp-1"></a>
 ### 1. Files and files extensions
 
 C++ source files should end with the `.cpp` extension.  
